@@ -31,20 +31,29 @@ class DDControllerButton: NSObject {
 	/// Keep track of how many updates `pressed` has been equal to `true` for in order to handle long presses.
 	private var consecutivelyPressedCount: Int
 	
+	/// Whether or not we've already called the long press handler for the current press.
+	/// We use this value to avoid calling the long press handler multiple times if the user keeps the button pressed.
+	private var hasCalledLongPressHandlerForCurrentPress: Bool
+	
 	/// The current press state of the button.
 	public var pressed: Bool {
 		didSet {
 			// Call the press change handler when the value changes
 			if oldValue != pressed {
 				pressedChangedHandler?(self, pressed)
+				
+				// The press state changed, so we can call the long press handler again the next time a long press is detected.
+				hasCalledLongPressHandlerForCurrentPress = false
 			}
 			
 			// Only increment the `consecutivelyPressedCount` if `pressed == true`
 			consecutivelyPressedCount = pressed ? (consecutivelyPressedCount + 1) : 0
 			
-			// Call the long press handler if the `longPressRequirement` has been met
-			if consecutivelyPressedCount > DDControllerButton.longPressRequirement {
+			// Call the long press handler if the `longPressRequirement` has been met and we haven't already called it for the current press
+			if !hasCalledLongPressHandlerForCurrentPress && consecutivelyPressedCount > DDControllerButton.longPressRequirement {
 				longPressHandler?(self, pressed)
+				consecutivelyPressedCount = 0
+				hasCalledLongPressHandlerForCurrentPress = true
 			}
 			
 			// Always call the value changed handler
@@ -55,6 +64,7 @@ class DDControllerButton: NSObject {
 	override init() {
 		pressed = false
 		consecutivelyPressedCount = 0
+		hasCalledLongPressHandlerForCurrentPress = false
 		super.init()
 	}
 }
