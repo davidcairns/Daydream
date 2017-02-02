@@ -53,7 +53,7 @@ func controllerDidConnect(_ notification: Notification) {
 
 Handle touches on the device touchpad by setting its `pointChangedHandler`:
 ```swift
-controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint)
+controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
 	print("The point changed to \(point).")
 }
 // ...
@@ -72,7 +72,7 @@ Each button has the following handlers:
 
 For example, to continuously print the pressed state of the home button:
 ```swift
-controller.homeButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool)
+controller.homeButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
 	print("The home button is currently \(pressed ? "pressed" : "not pressed").")
 }
 // ...
