@@ -1,0 +1,13 @@
+module: Daydream
+module_name: Daydream
+author: Sachin Patel
+author_url: https://gizmosachin.com
+github_url: https://github.com/gizmosachin/Daydream
+github-file-prefix: https://github.com/gizmosachin/Daydream/tree/master
+readme_path: ./source/README.md
+root-url: https://gizmosachin.github.io/Daydream/docs
+xcodebuild-arguments: -scheme,Daydream
+module-version: master
+exclude: []
+copyright: '© 2017 [Sachin Patel](http://gizmosachin.com).'
+swift_version: 3.0
