@@ -43,7 +43,7 @@ class DDControllerButton: NSObject {
 			consecutivelyPressedCount = pressed ? (consecutivelyPressedCount + 1) : 0
 			
 			// Call the long press handler if the `longPressRequirement` has been met
-			if consecutivelyPressedCount > longPressRequirement {
+			if consecutivelyPressedCount > DDControllerButton.longPressRequirement {
 				longPressHandler?(self, pressed)
 			}
 			
