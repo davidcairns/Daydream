@@ -9,12 +9,37 @@
 import UIKit
 import CoreMotion
 
-class DDControllerState: CustomStringConvertible {
-	private(set) var gyro: CMAcceleration
-	private(set) var acceleration: CMAcceleration
-	private(set) var magnetometer: CMAcceleration
+/// Represents the state of a controller at a given time.
+///
+/// Note: `DDControllerState` is intended for use internally within `DDController`. To interface with controllers,
+/// please call `DDController.startDaydreamControllerDiscovery()` and subscribe to the `DDControllerDidConnect`
+/// notification. Then, access the touchpad and buttons from their associated values on `DDController`.
+///
+/// Note: Getting the `gyro`, `acceleration`, and `magnetometer` values are currently unsupported.
+/// With some tweaks to the implementation of `getSignedDouble`, it may be possible to get correct values.
+///
+/// This class wouldn't be possible without Matteo Pisani's fantastic reverse engineering of the Daydream View controller:
+/// https://hackernoon.com/how-i-hacked-google-daydream-controller-c4619ef318e4#.yjtxmhmec
+///
+internal class DDControllerState: CustomStringConvertible {
+	/// The current point on the touchpad.
+	/// Note: This value is equivalent to `CGPoint.zero` if the user's finger is not currently on the touchpad.
 	private(set) var touchPoint: CGPoint
+	
+	/// The buttons currently being pressed on the controller.
 	private(set) var buttons: Buttons
+	
+	/// The current values of the gyroscope.
+	/// Bug: Gyroscope values are not currently parsed correctly.
+	private(set) var gyro: CMAcceleration
+	
+	/// The current acceleration of the controller.
+	/// Bug: Accelerometer values are not currently parsed correctly.
+	private(set) var acceleration: CMAcceleration
+	
+	// The current values of the magnetometer.
+	/// Bug: Magnetometer values are not currently parsed correctly.
+	private(set) var magnetometer: CMAcceleration
 	
 	public var description: String {
 		var result = "State: {"
@@ -27,8 +52,10 @@ class DDControllerState: CustomStringConvertible {
 		return result
 	}
 	
+	/// The bit string representing this controller state.
 	private var bitstring: String
 	
+	/// A `OptionSet` used for representing which buttons are currently being pressed.
 	struct Buttons: OptionSet, CustomStringConvertible {
 		let rawValue: Int
 		
@@ -47,9 +74,11 @@ class DDControllerState: CustomStringConvertible {
 		static let volumeUp = Buttons(rawValue: 1 << 4)
 	}
 	
-	init?(data: String) {
+	/// The initializer for `DDControllerState`.
+	/// - parameter data: A hex string from the Daydream View controller representing the state.
+	init?(hexString: String) {
 		do {
-			bitstring = try DDControllerState.parseHex(data: data)
+			bitstring = try DDControllerState.parse(hexString: hexString)
 			
 			let gyroX = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 14, to: 27)
 			let gyroY = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 27, to: 40)
@@ -85,6 +114,10 @@ class DDControllerState: CustomStringConvertible {
 		case failed
 	}
 	
+	/// Gets the bits between `from` and `to` in `bitstring` and returns the integer value.
+	/// - parameter bitstring: A bitstring to be read.
+	/// - parameter from: The start index, inclusive.
+	/// - parameter to: The end index, exclusive.
 	private class func getInt(bitstring: String, from: Int, to: Int) throws -> Int {
 		let start = bitstring.index(bitstring.startIndex, offsetBy: from)
 		let end = bitstring.index(bitstring.startIndex, offsetBy: to)
@@ -95,6 +128,15 @@ class DDControllerState: CustomStringConvertible {
 		return result
 	}
 	
+	/// Gets the bits between `from` and `to` in `bitstring` and returns the signed double value.
+	///
+	/// Bug: This should interpret the bits as a two's complement value and return the signed double.
+	///      It currently returns the same value as `getInt` would, causing `gyro`, `acceleration`, and `magnetometer`
+	///      to be unsupported as of v1.0.
+	///
+	/// - parameter bitstring: A bitstring to be read.
+	/// - parameter from: The start index, inclusive.
+	/// - parameter to: The end index, exclusive.
 	private class func getSignedDouble(bitstring: String, from: Int, to: Int) throws -> Double {
 		let start = bitstring.index(bitstring.startIndex, offsetBy: from)
 		let end = bitstring.index(bitstring.startIndex, offsetBy: to)
@@ -109,12 +151,14 @@ class DDControllerState: CustomStringConvertible {
 		return Double(result)
 	}
 	
-	private class func parseHex(data: String) throws -> String {
+	/// Returns a bitstring from an input hex string.
+	/// - parameter data: The input hex string.
+	private class func parse(hexString: String) throws -> String {
 		var bitchain = ""
-		for i in stride(from: 2, to: data.characters.count + 1, by: 2) {
-			let start = data.index(data.startIndex, offsetBy: i-2)
-			let end = data.index(data.startIndex, offsetBy: i)
-			let part = data.substring(with: start..<end)
+		for i in stride(from: 2, to: hexString.characters.count + 1, by: 2) {
+			let start = hexString.index(hexString.startIndex, offsetBy: i-2)
+			let end = hexString.index(hexString.startIndex, offsetBy: i)
+			let part = hexString.substring(with: start..<end)
 			guard let hexInt = Int(part, radix: 16) else {
 				throw ParseError.failed
 			}
@@ -124,6 +168,9 @@ class DDControllerState: CustomStringConvertible {
 		return bitchain
 	}
 	
+	/// Zero pads a bitstring to a given size.
+	/// - parameter string: A bit string.
+	/// - paramter size: The final desired zero-padded size.
 	private class func zeroPad(string: String, to size: Int) -> String {
 		var padded = string
 		for _ in 0..<(size - string.characters.count) {
