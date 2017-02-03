@@ -1,3 +1,5 @@
+![Daydream](https://raw.githubusercontent.com/gizmosachin/Daydream/master/Daydream.gif)
+
 # Daydream
 
 Daydream lets you use the [Daydream View](https://madeby.google.com/vr/) controller with iOS devices.
@@ -12,8 +14,6 @@ Alternatively, use it to add support for the Daydream View controller to your ap
 - [x] Full access to device trackpad and buttons
 - [ ] Support for gyro, accelerometer, and magnetometer
 - [ ] tvOS compatibility
-
-![Daydream](https://raw.githubusercontent.com/gizmosachin/Daydream/master/Daydream.gif)
 
 ![Pod Version](https://img.shields.io/cocoapods/v/Daydream.svg) [![Build Status](https://travis-ci.org/gizmosachin/Daydream.svg?branch=master)](https://travis-ci.org/gizmosachin/Daydream)
 
