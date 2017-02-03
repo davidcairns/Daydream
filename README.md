@@ -23,7 +23,9 @@ Daydream is written in Swift 3.0.
 
 ## Device Discovery
 
-First, subscribe to the `DDControllerDidConnect` notification. Then, discover Daydream View controllers:
+**Important:** Ensure your application has a valid description set for the `NSBluetoothPeripheralUsageDescription` in your `Info.plist` file.
+
+Then, subscribe to the `DDControllerDidConnect` notification and begin discovering Daydream View controllers:
 
 ``` swift
 NotificationCenter.default.addObserver(self, selector: #selector(controllerDidConnect(_:)), name: Notification.Name.DDControllerDidConnect, object: nil)
@@ -96,7 +98,8 @@ override func viewWillAppear(_ animated: Bool) {
 
 func controllerDidUpdateBatteryLevel(_ notification: Notification) {
 	guard let controller = notification.object as? DDController else { return }
-	print("The battery level is \(controller.batteryLevel).")
+	guard let battery = controller.batteryLevel else { return }
+	print("The battery level is \(battery).")
 }
 ```
 
