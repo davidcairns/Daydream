@@ -76,7 +76,145 @@
             
             <a href='#daydream' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='daydream'>Daydream</h1>
 
-<p>Use the Daydream View controller with your iOS app.</p>
+<p>Daydream lets you use the <a href="https://madeby.google.com/vr/">Daydream View</a> controller with iOS devices.</p>
+
+<p>Use it with <a href="https://developers.google.com/vr/unity/">Google&rsquo;s Unity VR SDK</a> to build virtual reality games with full controller support. 
+Alternatively, use it to add support for the Daydream View controller to your app just for fun.</p>
+<a href='#features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='features'>Features</h3>
+
+<ul>
+<li>[x] Simple API similar to the <code>GameController</code> framework</li>
+<li>[x] Device discovery</li>
+<li>[x] Support for multiple controllers</li>
+<li>[x] Full access to device trackpad and buttons</li>
+<li>[ ] Support for gyro, accelerometer, and magnetometer</li>
+<li>[ ] tvOS compatibility</li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/gizmosachin/Daydream/master/Daydream.gif" alt="Daydream"></p>
+
+<p><img src="https://img.shields.io/cocoapods/v/Daydream.svg" alt="Pod Version"> <a href="https://travis-ci.org/gizmosachin/Daydream"><img src="https://travis-ci.org/gizmosachin/Daydream.svg?branch=master" alt="Build Status"></a></p>
+<a href='#version-compatibility' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='version-compatibility'>Version Compatibility</h2>
+
+<p>Daydream is written in Swift 3.0.</p>
+<a href='#device-discovery' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='device-discovery'>Device Discovery</h2>
+
+<p><strong>Important:</strong> Ensure your application has a valid description set for the <code>NSBluetoothPeripheralUsageDescription</code> in your <code>Info.plist</code> file.</p>
+
+<p>Then, subscribe to the <code>DDControllerDidConnect</code> notification and begin discovering Daydream View controllers:</p>
+<pre class="highlight swift"><code><span class="kt">NotificationCenter</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">selector</span><span class="p">:</span> <span class="err">#</span><span class="nf">selector</span><span class="p">(</span><span class="nf">controllerDidConnect</span><span class="p">(</span><span class="nv">_</span><span class="p">:)),</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="o">.</span><span class="kt">DDControllerDidConnect</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="kt">DDController</span><span class="o">.</span><span class="nf">startDaydreamControllerDiscovery</span><span class="p">()</span>
+</code></pre>
+
+<p>Stop searching for devices:
+<code>swift
+DDController.stopDaydreamControllerDiscovery()
+</code></p>
+
+<p>Get notified when devices disconnect:
+<code>swift
+NotificationCenter.default.addObserver(self, selector: #selector(controllerDidDisconnect(_:)), name: Notification.Name.DDControllerDidDisconnect, object: nil)
+</code></p>
+<a href='#controller-support' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='controller-support'>Controller Support</h2>
+
+<p>Once a device connects, the object on the <code>DDControllerDidConnect</code> notification is the newly connected <code>DDController</code>. Alternatively, you can access all connected controllers via the static <code>controllers</code> array on <code>DDController</code>.</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">controllerDidConnect</span><span class="p">(</span><span class="n">_</span> <span class="nv">notification</span><span class="p">:</span> <span class="kt">Notification</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">controller</span> <span class="o">=</span> <span class="n">notification</span><span class="o">.</span><span class="n">object</span> <span class="k">as?</span> <span class="kt">DDController</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Handle touches on the device touchpad by setting its <code>pointChangedHandler</code>:
+<code>swift
+controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
+    print(&quot;The point changed to \(point).&quot;)
+}
+// ...
+</code></p>
+
+<p>You can access all of the buttons available on any instance of <code>DDController</code>:
+- <code>appButton</code>
+- <code>homeButton</code>
+- <code>volumeUpButton</code>
+- <code>volumeDownButton</code></p>
+
+<p>Each button has the following handlers:
+- <code>valueChangedHandler</code>: Receive continuous updates on the state of the button.
+- <code>pressedChangedHandler</code>: Only receive updates when the pressed state of the button changes.
+- <code>longPressHandler</code>: Only receive an update when the button has been pressed for one second.</p>
+
+<p>For example, to continuously print the pressed state of the home button:
+<code>swift
+controller.homeButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+    print(&quot;The home button is currently \(pressed ? &quot;pressed&quot; : &quot;not pressed&quot;).&quot;)
+}
+// ...
+</code></p>
+<a href='#device-information' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='device-information'>Device Information</h2>
+
+<p>You can access the current battery percentage of the controller by accessing the <code>batteryLevel</code> property on <code>DDController</code>. Unfortunately, due to a hardware limitation, you can&rsquo;t receive continuous updates when the battery level changes. </p>
+
+<p>Subscribe to the <code>DDControllerDidUpdateBatteryLevel</code> notification and call <code>updateBatteryLevel()</code> on the desired controller.</p>
+<pre class="highlight swift"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">viewWillAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">viewWillAppear</span><span class="p">(</span><span class="n">animated</span><span class="p">)</span>
+
+    <span class="kt">NotificationCenter</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">selector</span><span class="p">:</span> <span class="err">#</span><span class="nf">selector</span><span class="p">(</span><span class="nf">controllerDidUpdateBatteryLevel</span><span class="p">(</span><span class="nv">_</span><span class="p">:)),</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="o">.</span><span class="kt">DDControllerDidUpdateBatteryLevel</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+    <span class="k">guard</span> <span class="kt">DDController</span><span class="o">.</span><span class="n">controllers</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">controller</span> <span class="o">=</span> <span class="kt">DDController</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="n">controller</span><span class="o">.</span><span class="nf">updateBatteryLevel</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">controllerDidUpdateBatteryLevel</span><span class="p">(</span><span class="n">_</span> <span class="nv">notification</span><span class="p">:</span> <span class="kt">Notification</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">controller</span> <span class="o">=</span> <span class="n">notification</span><span class="o">.</span><span class="n">object</span> <span class="k">as?</span> <span class="kt">DDController</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">battery</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">batteryLevel</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"The battery level is </span><span class="se">\(</span><span class="n">battery</span><span class="se">)</span><span class="s">."</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You can also access the following properties on all <code>DDController</code> instances:
+- <code>manufacturer</code>
+- <code>firmwareVersion</code>
+- <code>serialNumber</code>
+- <code>modelNumber</code>
+- <code>hardwareVersion</code>
+- <code>softwareVersion</code></p>
+
+<p><a href="http://gizmosachin.github.io/Daydream/docs">Please see the documentation</a> and check out the sample app for an example.</p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+<a href='#cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='cocoapods'>CocoaPods</h3>
+
+<p>Daydream is available for installation using <a href="http://cocoapods.org/">CocoaPods</a>. To integrate, add the following to your Podfile`:</p>
+<pre class="highlight ruby"><code><span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'9.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">pod</span> <span class="s1">'Daydream'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+</code></pre>
+<a href='#carthage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='carthage'>Carthage</h3>
+
+<p>Daydream is also available for installation using <a href="https://github.com/Carthage/Carthage">Carthage</a>. To integrate, add the following to your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "gizmosachin/Daydream" &gt;= 1.0
+</code></pre>
+<a href='#swift-package-manager' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='swift-package-manager'>Swift Package Manager</h3>
+
+<p>Daydream is also available for installation using the <a href="https://swift.org/package-manager/">Swift Package Manager</a>. Add the following to your <code>Package.swift</code>:</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"MyProject"</span><span class="p">,</span>
+    <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/gizmosachin/Daydream.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</code></pre>
+<a href='#manual' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='manual'>Manual</h3>
+
+<p>You can also simply copy the <code>Sources</code> directory into your Xcode project.</p>
+<a href='#credits' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='credits'>Credits</h2>
+
+<p>This project wouldn&rsquo;t be possible without <a href="https://hackernoon.com/how-i-hacked-google-daydream-controller-c4619ef318e4">this excellent post</a> from Matteo Pisani, who reverse engineered the service and characteristic parameters from the Daydream View controller.</p>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>Daydream is available under the MIT license, see the <a href="https://github.com/gizmosachin/Daydream/blob/master/LICENSE">LICENSE</a> file for more information.</p>
 
           </section>
         </section>
