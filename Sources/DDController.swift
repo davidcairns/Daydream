@@ -10,7 +10,6 @@ import UIKit
 import CoreBluetooth
 
 enum DDControllerError: Error {
-	case unknown
 	case bluetoothOff
 }
 
@@ -106,16 +105,17 @@ class DDController: NSObject {
 	/// To be notified when a controller disconnects, subscribe to the `DDControllerDidDisconnect` notification.
 	/// The `object` on the notification will be the newly connected or disconnected `DDController`.
 	///
-	/// This function throws a `DDControllerError` if Bluetooth is turned off on the device or an internal error occurs.
+	/// This function throws a `DDControllerError` if Bluetooth is turned off.
 	class func startDaydreamControllerDiscovery() throws {
-		guard let bluetoothManager = manager.bluetoothManager else {
-			throw DDControllerError.unknown
-		}
+		guard let bluetoothManager = manager.bluetoothManager else { return }
 		
-		// Bluetooth isn't on, return an error
-		guard bluetoothManager.state == .poweredOn else {
+		// Bluetooth is off, return an error
+		if bluetoothManager.state == .poweredOff {
 			throw DDControllerError.bluetoothOff
 		}
+		
+		// Start searching the next time we encounter a state change
+		manager.shouldSearchForDevices = true
 		
 		// We're already scanning, return
 		guard !bluetoothManager.isScanning else { return }
@@ -124,7 +124,11 @@ class DDController: NSObject {
 	/// Stops discovery of Daydream View controllers.
 	class func stopDaydreamControllerDiscovery() {
 		guard let bluetoothManager = manager.bluetoothManager else { return }
-		bluetoothManager.stopScan()
+		manager.shouldSearchForDevices = false
+		
+		if bluetoothManager.isScanning {
+			bluetoothManager.stopScan()
+		}
 	}
 	
 	/// Sets up the `CBPeripheral` delegate and discovers its services.
@@ -250,9 +254,13 @@ extension DDController: CBPeripheralDelegate {
 // MARK: - DDConnectionManager
 // An internal class that handles connecting to Daydream View controllers using `CoreBluetooth`.
 private final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
+	/// Whether we should start searching for devices the next time the `bluetoothManager` has a `state` of `poweredOn`.
+	fileprivate var shouldSearchForDevices: Bool
+	
 	fileprivate var bluetoothManager: CBCentralManager?
 	
 	override init() {
+		shouldSearchForDevices = false
 		super.init()
 		bluetoothManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
 	}
@@ -264,7 +272,9 @@ private final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
 			return
 		}
 		
-		central.scanForPeripherals(withServices: DDController.serviceUUIDs, options: nil)
+		if shouldSearchForDevices {
+			central.scanForPeripherals(withServices: DDController.serviceUUIDs, options: nil)
+		}
 	}
 	
 	/// Called when a Bluetooth peripheral is discovered.
