@@ -1,11 +1,11 @@
-![Daydream](https://raw.githubusercontent.com/gizmosachin/Daydream/master/Daydream.gif)
-
 # Daydream
 
 Daydream lets you use the [Daydream View](https://madeby.google.com/vr/) controller with iOS devices.
 
 Use it with [Google's Unity VR SDK](https://developers.google.com/vr/unity/) to build virtual reality games with full controller support. 
 Alternatively, use it to add support for the Daydream View controller to your app just for fun.
+
+![Daydream](https://raw.githubusercontent.com/gizmosachin/Daydream/master/Daydream.gif)
 
 ### Features
 - [x] Simple API similar to the `GameController` framework
