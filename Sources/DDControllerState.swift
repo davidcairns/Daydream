@@ -102,7 +102,7 @@ internal class DDControllerState: CustomStringConvertible {
 //            let magZ = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 79, to: 92)) * magScale
 //            magnetometer = CMAcceleration(x: magX, y: magY, z: magZ)
             magnetometer = NormalizedMagnetometerFromData(data)
-            print("magnetometer:\t\(Double(round(magnetometer.x * 10) / 10)),\t\(Double(round(magnetometer.y * 10) / 10)),\t\(Double(round(magnetometer.z * 10) / 10))")
+//            print("magnetometer:\t\(Double(round(magnetometer.x * 10) / 10)),\t\(Double(round(magnetometer.y * 10) / 10)),\t\(Double(round(magnetometer.z * 10) / 10))")
 			
 //            let accX = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 92, to: 105)
 //            let accY = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 105, to: 118)

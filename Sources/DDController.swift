@@ -273,10 +273,17 @@ extension DDController: CBPeripheralDelegate {
 //        gyro = state.gyro
 //        magnetometer = state.magnetometer
 //        acceleration = state.acceleration
-        self.madgwick.update(withGyro: state.gyro, acceleration: state.acceleration, magnetometer: state.magnetometer)
+//        self.madgwick.update(withGyro: state.gyro, acceleration: state.acceleration, magnetometer: state.magnetometer)
 //        print("roll:\t\(Double(round(self.madgwick.roll() * 10) / 10))")
 //        print("pitch:\t\(Double(round(self.madgwick.pitch() * 10) / 10))")
 //        print("yaw:\t\(Double(round(self.madgwick.yaw() * 10) / 10))")
+        
+        
+        // FIXME: Seems like yaw & pitch are flipped???
+        let orientation = state.orientation
+//        print("roll: \(orientation.roll)")
+//        print("pitch: \(orientation.pitch)")
+        print("yaw: \(orientation.yaw)")
 		
 		// Update buttons
 		let buttons = state.buttons
@@ -286,6 +293,50 @@ extension DDController: CBPeripheralDelegate {
 		volumeUpButton.pressed = buttons.contains(.volumeUp)
 		volumeDownButton.pressed = buttons.contains(.volumeDown)
 	}
+}
+
+extension DDControllerState {
+    var orientation: CMQuaternion {
+        let angle = sqrt(magnetometer.x * magnetometer.x
+            + magnetometer.y * magnetometer.y
+            + magnetometer.z * magnetometer.z)
+        if angle > 0 {
+            let axis = CMAcceleration(x: magnetometer.x * 1.0 / angle,
+                                      y: magnetometer.y * 1.0 / angle,
+                                      z: magnetometer.z * 1.0 / angle)
+            return CMQuaternion.from(axis: axis, angle: angle)
+        }
+        return CMQuaternion(x: 0, y: 0, z: 0, w: 1)
+    }
+}
+
+extension CMQuaternion {
+    static func from(axis: CMAcceleration, angle: Double) -> CMQuaternion {
+        return CMQuaternion(x: axis.x * sin(angle / 2.0),
+                            y: axis.y * sin(angle / 2.0),
+                            z: axis.z * sin(angle / 2.0),
+                            w: cos(angle / 2.0))
+    }
+    
+    var roll: Double {
+        let sinr = 2.0 * (self.w * self.x + self.y * self.z)
+        let cosr = 1.0 - 2.0 * (self.x * self.x + self.y * self.y)
+        return atan2(sinr, cosr)
+    }
+    var pitch: Double {
+        let sinp = 2.0 * (self.w * self.y - self.z * self.x)
+        if fabs(sinp) >= 1.0 {
+            return copysign(Double.pi / 2.0, sinp)
+        }
+        else {
+            return asin(sinp)
+        }
+    }
+    var yaw: Double {
+        let siny = 2.0 * (self.w * self.z + self.x * self.y)
+        let cosy = 1.0 - 2.0 * (self.y * self.y + self.z * self.z)
+        return atan2(siny, cosy)
+    }
 }
 
 // MARK: - DDConnectionManager
