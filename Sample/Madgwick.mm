@@ -42,11 +42,9 @@
 - (double)roll {
     return madgwick_.getRoll();
 }
-
 - (double)pitch {
     return madgwick_.getPitch();
 }
-
 - (double)yaw {
     return madgwick_.getYaw();
 }
@@ -54,13 +52,12 @@
 - (double)rollRadians {
     return madgwick_.getRollRadians();
 }
-
 - (double)pitchRadians {
     return madgwick_.getPitchRadians();
 }
-
 - (double)yawRadians {
     return madgwick_.getYawRadians();
 }
 
 @end
+

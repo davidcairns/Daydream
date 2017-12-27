@@ -18,6 +18,7 @@
 		031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */; };
 		DFA710581FF33FB70053090E /* MadgwickAHRS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFA710561FF33FB70053090E /* MadgwickAHRS.cpp */; };
 		DFA7105C1FF33FEE0053090E /* Madgwick.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105B1FF33FEE0053090E /* Madgwick.mm */; };
+		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		DFA710571FF33FB70053090E /* MadgwickAHRS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MadgwickAHRS.h; sourceTree = "<group>"; };
 		DFA7105A1FF33FEE0053090E /* Madgwick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Madgwick.h; sourceTree = "<group>"; };
 		DFA7105B1FF33FEE0053090E /* Madgwick.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Madgwick.mm; sourceTree = "<group>"; };
+		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrientationDataParsing.h; sourceTree = "<group>"; };
+		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrientationDataParsing.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 		DFA710591FF33FBF0053090E /* Madgwick */ = {
 			isa = PBXGroup;
 			children = (
+				DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */,
+				DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */,
 				DFA7105A1FF33FEE0053090E /* Madgwick.h */,
 				DFA7105B1FF33FEE0053090E /* Madgwick.mm */,
 				DFA710571FF33FB70053090E /* MadgwickAHRS.h */,
@@ -183,6 +188,7 @@
 				031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */,
 				DFA7105C1FF33FEE0053090E /* Madgwick.mm in Sources */,
 				031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */,
+				DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,
 				031BC8B31E43DFC90007BEA3 /* DDControllerButton.swift in Sources */,
 				DFA710581FF33FB70053090E /* MadgwickAHRS.cpp in Sources */,

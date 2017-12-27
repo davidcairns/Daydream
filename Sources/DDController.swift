@@ -100,7 +100,7 @@ class DDController: NSObject {
 //        self.gyro = CMAcceleration()
 //        self.magnetometer = CMAcceleration()
 //        self.acceleration = CMAcceleration()
-        self.madgwick = Madgwick()
+        self.madgwick = Madgwick(frequency: 38.0)
 	}
 	
 	/// Warning: Call `DDController.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
@@ -149,6 +149,9 @@ class DDController: NSObject {
 		peripheral?.delegate = self
 		peripheral?.discoverServices(DDController.serviceUUIDs)
 	}
+    
+    var updates: Int = 0
+    var updatesStart: TimeInterval = 0
 }
 
 /// An extension of `DDController` that handles incoming data.
@@ -214,7 +217,7 @@ extension DDController: CBPeripheralDelegate {
 		
 		// Update the device state based on the hex string representation of the `characteristic`'s value.
 		case .state where characteristic.service.kind == .state:
-			update(from: data.hexStringValue)
+            update(from: data.hexStringValue, data: data)
 		
 		// The device returns the battery level as an integer out of 100.
 		// Convert it to a float and post the battery update notification.
@@ -248,9 +251,17 @@ extension DDController: CBPeripheralDelegate {
 	}
 	
 	/// Updates the state of the controller's touchpad and buttons based on the hex string from the device.
-	private func update(from hexString: String) {
+    private func update(from hexString: String, data: Data) {
 		// Create an instance of DDControllerState from the hex string.
-		guard let state = DDControllerState(hexString: hexString) else { return }
+        guard let state = DDControllerState(hexString: hexString, data: data) else { return }
+        
+//        updates += 1
+//        if 0 == updatesStart {
+//            updatesStart = Date.timeIntervalSinceReferenceDate
+//        }
+//        let now = Date.timeIntervalSinceReferenceDate
+//        let elapsed = now - updatesStart
+//        print("frequency: \(Double(updates) / elapsed)Hz")
 		
 		// Update the touchpad's point
         if touchpad.point != state.touchPoint {
@@ -263,6 +274,9 @@ extension DDController: CBPeripheralDelegate {
 //        magnetometer = state.magnetometer
 //        acceleration = state.acceleration
         self.madgwick.update(withGyro: state.gyro, acceleration: state.acceleration, magnetometer: state.magnetometer)
+//        print("roll:\t\(Double(round(self.madgwick.roll() * 10) / 10))")
+//        print("pitch:\t\(Double(round(self.madgwick.pitch() * 10) / 10))")
+//        print("yaw:\t\(Double(round(self.madgwick.yaw() * 10) / 10))")
 		
 		// Update buttons
 		let buttons = state.buttons
