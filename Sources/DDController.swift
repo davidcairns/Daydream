@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import CoreMotion
 
 enum DDControllerError: Error {
 	case bluetoothOff
@@ -78,6 +79,13 @@ class DDController: NSObject {
 	
 	/// The volume down button on the right side of the controller.
 	fileprivate(set) var volumeDownButton: DDControllerButton
+    
+//    fileprivate(set) var gyro: CMAcceleration
+//    fileprivate(set) var magnetometer: CMAcceleration
+//    fileprivate(set) var acceleration: CMAcceleration
+    
+    var madgwick: Madgwick
+
 	
 	// MARK: - Initializers
 	
@@ -89,6 +97,10 @@ class DDController: NSObject {
 		self.homeButton = DDControllerButton()
 		self.volumeUpButton = DDControllerButton()
 		self.volumeDownButton = DDControllerButton()
+//        self.gyro = CMAcceleration()
+//        self.magnetometer = CMAcceleration()
+//        self.acceleration = CMAcceleration()
+        self.madgwick = Madgwick()
 	}
 	
 	/// Warning: Call `DDController.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
@@ -229,7 +241,9 @@ extension DDController: CBPeripheralDelegate {
 		case .softwareVersion:
 			softwareVersion = data.stringValue
 			
-		default: return
+		default:
+            print("Other characteristic: \(characteristic.kind)")
+            return
 		}
 	}
 	
@@ -239,7 +253,16 @@ extension DDController: CBPeripheralDelegate {
 		guard let state = DDControllerState(hexString: hexString) else { return }
 		
 		// Update the touchpad's point
-		touchpad.point = state.touchPoint
+        if touchpad.point != state.touchPoint {
+            print("touchpad point changed: \(state.touchPoint)")
+            touchpad.point = state.touchPoint
+        }
+        
+        // Update the orientation
+//        gyro = state.gyro
+//        magnetometer = state.magnetometer
+//        acceleration = state.acceleration
+        self.madgwick.update(withGyro: state.gyro, acceleration: state.acceleration, magnetometer: state.magnetometer)
 		
 		// Update buttons
 		let buttons = state.buttons
@@ -350,7 +373,7 @@ fileprivate extension CBService {
 
 /// A `CBCharacteristic` extension to easily identify characteristics based on UUID within `DDController` and associated classes.
 fileprivate extension CBCharacteristic {
-	enum Kind {
+    enum Kind: String {
 		case unknown
 		case state
 		case batteryLevel

@@ -18,7 +18,7 @@ private extension CAShapeLayer {
 
 // Convenience extension with a custom app tint color
 private extension UIColor {
-	static let appTint = UIColor(colorLiteralRed: 80 / 255, green: 227 / 255, blue: 194 / 255, alpha: 1)
+    static let appTint = UIColor(red: 80.0 / 255.0, green: 227.0 / 255.0, blue: 194.0 / 255.0, alpha: 1.0)
 }
 
 class SampleViewController: UIViewController {
