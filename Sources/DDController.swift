@@ -308,8 +308,9 @@ func Vect3Normalize(_ v: Vect3) -> Vect3 {
 extension CMQuaternion: CustomStringConvertible {
     static func from(axis: Vect3, angle: Double) -> CMQuaternion {
         let n = Vect3Normalize(axis)
-        let sin_a = sin(angle / 2.0)
-        let cos_a = cos(angle / 2.0)
+        let halfAngle = angle / 2.0
+        let sin_a = sin(halfAngle)
+        let cos_a = cos(halfAngle)
         return CMQuaternion(x: n.x * sin_a,
                             y: n.y * sin_a,
                             z: n.z * sin_a,
@@ -342,9 +343,7 @@ extension CMQuaternion: CustomStringConvertible {
     }
     
     var inverse: CMQuaternion {
-        let inverseMagnitude = 1.0 / self.magnitude
-        let c = self.conjugate.normalized
-        return CMQuaternion(x: c.x * inverseMagnitude, y: c.y * inverseMagnitude, z: c.z * inverseMagnitude, w: c.w * inverseMagnitude)
+        return self.conjugate.normalized
     }
     
     func times(quaternion q2: CMQuaternion) -> CMQuaternion {
