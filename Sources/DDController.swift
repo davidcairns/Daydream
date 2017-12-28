@@ -318,14 +318,28 @@ extension CMQuaternion: CustomStringConvertible {
     }
     
     var matrix: CATransform3D {
-//        let t = CATransform3D(m11: CGFloat(1 - 2 * (y * y + z * z)),    m12: CGFloat(2 * (x * y + w * z)),      m13: CGFloat(2 * (w * y + x * z)),      m14: 0.0,
-//                              m21: CGFloat(2 * (x * y + w * z)),        m22: CGFloat(1 - 2 * (x * x + z * z)),  m23: CGFloat(2 * (y * z + w * x)),      m24: 0.0,
-//                              m31: CGFloat(2 * (x * z - w * y)),        m32: CGFloat(2 * (w * x + y * z)),      m33: CGFloat(1 - 2 * (x * x + y * y)),  m34: 0.0,
-//                              m41: 0.0,                                 m42: 0.0,                               m43: 0.0,                               m44: 1.0)
-        let t = CATransform3D(m11: CGFloat(1 - 2 * (y * y + z * z)),    m12: CGFloat(2 * (x * y + w * z)),      m13: CGFloat(2 * (x * z - w * y)),      m14: 0.0,
-                              m21: CGFloat(2 * (x * y + w * z)),        m22: CGFloat(1 - 2 * (x * x + z * z)),  m23: CGFloat(2 * (w * x + y * z)),      m24: 0.0,
-                              m31: CGFloat(2 * (w * y + x * z)),        m32: CGFloat(2 * (y * z + w * x)),      m33: CGFloat(1 - 2 * (x * x + y * y)),  m34: 0.0,
-                              m41: 0.0,                                 m42: 0.0,                               m43: 0.0,                               m44: 1.0)
+        let x2 = x + x
+        let y2 = y + y
+        let z2 = z + z
+        let xx = x * x2
+        let xy = x * y2
+        let xz = x * z2
+        let yy = y * y2
+        let yz = y * z2
+        let zz = z * z2
+        let wx = w * x2
+        let wy = w * y2
+        let wz = w * z2
+        
+//        let t = CATransform3D(m11: CGFloat(1 - (yy + zz)),  m12: CGFloat(xy + wz),          m13: CGFloat(xz - wy),          m14: CGFloat(0),
+//                              m21: CGFloat(xy - wz),        m22: CGFloat(1 - (xx + zz)),    m23: CGFloat(yz + wx),          m24: CGFloat(0),
+//                              m31: CGFloat(xz + wy),        m32: CGFloat(yz - wx),          m33: CGFloat(1 - (xx + yy)),    m34: CGFloat(0),
+//                              m41: CGFloat(0),              m42: CGFloat(0),                m43: CGFloat(0),                m44: CGFloat(1))
+        let t = CATransform3D(m11: CGFloat(1 - (yy + zz)),  m12: CGFloat(xy - wz),          m13: CGFloat(xz + wy),          m14: CGFloat(0),
+                              m21: CGFloat(xy + wz),        m22: CGFloat(1 - (xx + zz)),    m23: CGFloat(yz - wx),          m24: CGFloat(0),
+                              m31: CGFloat(xz - wy),        m32: CGFloat(yz + wx),          m33: CGFloat(1 - (xx + yy)),    m34: CGFloat(0),
+                              m41: CGFloat(0),              m42: CGFloat(0),                m43: CGFloat(0),                m44: CGFloat(1))
+        
         return t
     }
     
