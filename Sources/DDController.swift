@@ -80,12 +80,9 @@ class DDController: NSObject {
 	/// The volume down button on the right side of the controller.
 	fileprivate(set) var volumeDownButton: DDControllerButton
     
-//    fileprivate(set) var gyro: CMAcceleration
-//    fileprivate(set) var magnetometer: CMAcceleration
-//    fileprivate(set) var acceleration: CMAcceleration
+    typealias OrientationChangeHandler = (CMQuaternion) -> Void
+    var orientationChangedHandler: OrientationChangeHandler? = nil
     
-    var madgwick: Madgwick
-
 	
 	// MARK: - Initializers
 	
@@ -97,10 +94,6 @@ class DDController: NSObject {
 		self.homeButton = DDControllerButton()
 		self.volumeUpButton = DDControllerButton()
 		self.volumeDownButton = DDControllerButton()
-//        self.gyro = CMAcceleration()
-//        self.magnetometer = CMAcceleration()
-//        self.acceleration = CMAcceleration()
-        self.madgwick = Madgwick(frequency: 38.0)
 	}
 	
 	/// Warning: Call `DDController.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
@@ -255,35 +248,20 @@ extension DDController: CBPeripheralDelegate {
 		// Create an instance of DDControllerState from the hex string.
         guard let state = DDControllerState(hexString: hexString, data: data) else { return }
         
-//        updates += 1
-//        if 0 == updatesStart {
-//            updatesStart = Date.timeIntervalSinceReferenceDate
-//        }
-//        let now = Date.timeIntervalSinceReferenceDate
-//        let elapsed = now - updatesStart
-//        print("frequency: \(Double(updates) / elapsed)Hz")
-		
 		// Update the touchpad's point
         if touchpad.point != state.touchPoint {
-            print("touchpad point changed: \(state.touchPoint)")
+//            print("touchpad point changed: \(state.touchPoint)")
             touchpad.point = state.touchPoint
         }
         
-        // Update the orientation
-//        gyro = state.gyro
-//        magnetometer = state.magnetometer
-//        acceleration = state.acceleration
-//        self.madgwick.update(withGyro: state.gyro, acceleration: state.acceleration, magnetometer: state.magnetometer)
-//        print("roll:\t\(Double(round(self.madgwick.roll() * 10) / 10))")
-//        print("pitch:\t\(Double(round(self.madgwick.pitch() * 10) / 10))")
-//        print("yaw:\t\(Double(round(self.madgwick.yaw() * 10) / 10))")
-        
-        
-        // FIXME: Seems like yaw & pitch are flipped???
-        let orientation = state.orientation
+        if let handler = orientationChangedHandler {
+            // FIXME: Seems like yaw & pitch are flipped???
+            let orientation = state.orientation
+            handler(orientation)
+        }
 //        print("roll: \(orientation.roll)")
 //        print("pitch: \(orientation.pitch)")
-        print("yaw: \(orientation.yaw)")
+//        print("yaw: \(orientation.yaw)")
 		
 		// Update buttons
 		let buttons = state.buttons
@@ -297,34 +275,93 @@ extension DDController: CBPeripheralDelegate {
 
 extension DDControllerState {
     var orientation: CMQuaternion {
-        let angle = sqrt(magnetometer.x * magnetometer.x
-            + magnetometer.y * magnetometer.y
-            + magnetometer.z * magnetometer.z)
+        let angle = sqrt(magnetometer.x * magnetometer.x + magnetometer.y * magnetometer.y + magnetometer.z * magnetometer.z)
         if angle > 0 {
-            let axis = CMAcceleration(x: magnetometer.x * 1.0 / angle,
-                                      y: magnetometer.y * 1.0 / angle,
-                                      z: magnetometer.z * 1.0 / angle)
+            let axis = Vect3(x: magnetometer.x / angle,
+                             y: magnetometer.y / angle,
+                             z: magnetometer.z / angle)
             return CMQuaternion.from(axis: axis, angle: angle)
         }
         return CMQuaternion(x: 0, y: 0, z: 0, w: 1)
     }
 }
 
-extension CMQuaternion {
-    static func from(axis: CMAcceleration, angle: Double) -> CMQuaternion {
-        return CMQuaternion(x: axis.x * sin(angle / 2.0),
-                            y: axis.y * sin(angle / 2.0),
-                            z: axis.z * sin(angle / 2.0),
-                            w: cos(angle / 2.0))
+typealias Vect3 = (x: Double, y: Double, z: Double)
+func Vect3Dot(_ u: Vect3, _ v: Vect3) -> Double {
+    return u.x * v.x + u.y * v.y + u.z * v.z
+}
+func Vect3Cross(_ u: Vect3, _ v: Vect3) -> Vect3 {
+    return (x: u.y * v.z - u.z * v.y,
+            y: u.z * v.x - u.x * v.z,
+            z: u.x * v.y - u.y * v.x)
+}
+func Vect3Magnitude(_ v: Vect3) -> Double {
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+}
+func Vect3Normalize(_ v: Vect3) -> Vect3 {
+    let m = Vect3Magnitude(v)
+    return (x: v.x / m,
+            y: v.y / m,
+            z: v.z / m)
+}
+
+extension CMQuaternion: CustomStringConvertible {
+    static func from(axis: Vect3, angle: Double) -> CMQuaternion {
+        let n = Vect3Normalize(axis)
+        let sin_a = sin(angle / 2.0)
+        let cos_a = cos(angle / 2.0)
+        return CMQuaternion(x: n.x * sin_a,
+                            y: n.y * sin_a,
+                            z: n.z * sin_a,
+                            w: cos_a)
+    }
+    
+    var matrix: CATransform3D {
+//        let t = CATransform3D(m11: CGFloat(1 - 2 * (y * y + z * z)),    m12: CGFloat(2 * (x * y + w * z)),      m13: CGFloat(2 * (w * y + x * z)),      m14: 0.0,
+//                              m21: CGFloat(2 * (x * y + w * z)),        m22: CGFloat(1 - 2 * (x * x + z * z)),  m23: CGFloat(2 * (y * z + w * x)),      m24: 0.0,
+//                              m31: CGFloat(2 * (x * z - w * y)),        m32: CGFloat(2 * (w * x + y * z)),      m33: CGFloat(1 - 2 * (x * x + y * y)),  m34: 0.0,
+//                              m41: 0.0,                                 m42: 0.0,                               m43: 0.0,                               m44: 1.0)
+        let t = CATransform3D(m11: CGFloat(1 - 2 * (y * y + z * z)),    m12: CGFloat(2 * (x * y + w * z)),      m13: CGFloat(2 * (x * z - w * y)),      m14: 0.0,
+                              m21: CGFloat(2 * (x * y + w * z)),        m22: CGFloat(1 - 2 * (x * x + z * z)),  m23: CGFloat(2 * (w * x + y * z)),      m24: 0.0,
+                              m31: CGFloat(2 * (w * y + x * z)),        m32: CGFloat(2 * (y * z + w * x)),      m33: CGFloat(1 - 2 * (x * x + y * y)),  m34: 0.0,
+                              m41: 0.0,                                 m42: 0.0,                               m43: 0.0,                               m44: 1.0)
+        return t
+    }
+    
+    var magnitude: Double {
+        return sqrt(x * x + y * y + z * z + w * w)
+    }
+    
+    var conjugate: CMQuaternion {
+        return CMQuaternion(x: -x, y: -y, z: -z, w: w)
+    }
+    
+    var normalized: CMQuaternion {
+        let m = self.magnitude
+        return CMQuaternion(x: x / m, y: y / m, z: z / m, w: w / m)
+    }
+    
+    var inverse: CMQuaternion {
+        let inverseMagnitude = 1.0 / self.magnitude
+        let c = self.conjugate.normalized
+        return CMQuaternion(x: c.x * inverseMagnitude, y: c.y * inverseMagnitude, z: c.z * inverseMagnitude, w: c.w * inverseMagnitude)
+    }
+    
+    func times(quaternion q2: CMQuaternion) -> CMQuaternion {
+        let q1 = self
+        return CMQuaternion(x: q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+                            y: q1.w * q2.y + q1.y * q2.w + q1.z * q2.x - q1.x * q2.z,
+                            z: q1.w * q2.z + q1.z * q2.w + q1.x * q2.y - q1.y * q2.x,
+                            w: q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z) 
     }
     
     var roll: Double {
-        let sinr = 2.0 * (self.w * self.x + self.y * self.z)
-        let cosr = 1.0 - 2.0 * (self.x * self.x + self.y * self.y)
+        let sinr = 2.0 * (w * x + y * z)
+        let cosr = 1.0 - 2.0 * (x * x + y * y)
         return atan2(sinr, cosr)
     }
     var pitch: Double {
-        let sinp = 2.0 * (self.w * self.y - self.z * self.x)
+        let sinp = 2.0 * (w * y - z * x)
         if fabs(sinp) >= 1.0 {
             return copysign(Double.pi / 2.0, sinp)
         }
@@ -333,9 +370,17 @@ extension CMQuaternion {
         }
     }
     var yaw: Double {
-        let siny = 2.0 * (self.w * self.z + self.x * self.y)
-        let cosy = 1.0 - 2.0 * (self.y * self.y + self.z * self.z)
+        let siny = 2.0 * (w * z + x * y)
+        let cosy = 1.0 - 2.0 * (y * y + z * z)
         return atan2(siny, cosy)
+    }
+    
+    public var description: String {
+        let x_ = Double(Int(x * 100.0)) / 100.0
+        let y_ = Double(Int(y * 100.0)) / 100.0
+        let z_ = Double(Int(z * 100.0)) / 100.0
+        let w_ = Double(Int(w * 100.0)) / 100.0
+        return "(\(x_),\t\(y_),\t\(z_),\t\(w_))"
     }
 }
 

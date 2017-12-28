@@ -22,6 +22,8 @@ private extension UIColor {
 }
 
 class SampleViewController: UIViewController {
+    fileprivate let containerView: UIView
+    
 	// Image views for the controller and volume buttons
 	fileprivate let controllerImageView: UIImageView
 	fileprivate let volumeUpImageView: UIImageView
@@ -47,10 +49,16 @@ class SampleViewController: UIViewController {
 	fileprivate let controllerHeightToWidthRatio: CGFloat = 3.0
 	fileprivate let buttonToControllerRatio: CGFloat = 0.35
 	fileprivate let volumeButtonToControllerRatio: CGFloat = 0.025
+    
+    fileprivate var homeQuaternion: CMQuaternion? = nil
 	
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        containerView = UIView()
+        containerView.backgroundColor = UIColor.red
+        
 		controllerImageView = UIImageView(image: #imageLiteral(resourceName: "Controller"))
 		controllerImageView.contentMode = .scaleAspectFit
+        controllerImageView.backgroundColor = UIColor.green
 		
 		volumeUpImageView = UIImageView(image: #imageLiteral(resourceName: "Volume Up"))
 		volumeDownImageView = UIImageView(image: #imageLiteral(resourceName: "Volume Down"))
@@ -133,17 +141,25 @@ extension SampleViewController {
 	}
 	
 	func setupConstraints() {
-		view.addSubview(volumeUpImageView)
-		view.addSubview(volumeDownImageView)
-		view.addSubview(controllerImageView)
-		view.addSubview(touchpadPointImageView)
-		
+        view.addSubview(containerView)
+        containerView.addSubview(volumeUpImageView)
+        containerView.addSubview(volumeDownImageView)
+        containerView.addSubview(controllerImageView)
+        containerView.addSubview(touchpadPointImageView)
+        
 		let screenWidth = UIScreen.main.bounds.width
 		let controllerWidth = screenWidth * controllerSizeMultiplier
-		controllerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		controllerImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-		controllerImageView.widthAnchor.constraint(equalToConstant: controllerWidth).isActive = true
-		controllerImageView.heightAnchor.constraint(equalTo: controllerImageView.widthAnchor, multiplier: controllerHeightToWidthRatio).isActive = true
+        
+        containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        containerView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        controllerImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        controllerImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        controllerImageView.widthAnchor.constraint(equalToConstant: controllerWidth).isActive = true
+        controllerImageView.heightAnchor.constraint(equalTo: controllerImageView.widthAnchor, multiplier: controllerHeightToWidthRatio).isActive = true
 		controllerImageView.translatesAutoresizingMaskIntoConstraints = false
 		
 		volumeUpImageView.centerXAnchor.constraint(equalTo: controllerImageView.rightAnchor).isActive = true
@@ -223,8 +239,9 @@ extension SampleViewController {
 			self.showPress(layer: self.appButtonOverlay, pressed: pressed)
 		}
 		
-		controller.homeButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+		controller.homeButton.pressedChangedHandler = { (button: DDControllerButton, pressed: Bool) in
 			self.showPress(layer: self.homeButtonOverlay, pressed: pressed)
+            self.homeQuaternion = nil
 		}
 		
 		controller.volumeUpButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
@@ -234,8 +251,16 @@ extension SampleViewController {
 		controller.volumeDownButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
 			self.volumeDownImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Down") : #imageLiteral(resourceName: "Volume Down Pressed")
 		}
+        
+        controller.orientationChangedHandler = { (orientation) -> Void in
+            if nil == self.homeQuaternion {
+                self.homeQuaternion = orientation.inverse
+            }
+            let t = self.homeQuaternion!.times(quaternion: orientation)
+            self.containerView.layer.transform = t.matrix
+        }
 	}
-	
+    
 	func controllerDidDisconnect(_ notification: Notification) {
 		dismiss(animated: true, completion: nil)
 	}

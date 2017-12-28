@@ -80,46 +80,9 @@ internal class DDControllerState: CustomStringConvertible {
 		do {
 			bitstring = try DDControllerState.parse(hexString: hexString)
 			
-//            let gyroX = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 14, to: 27)
-//            let gyroY = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 27, to: 40)
-//            let gyroZ = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 40, to: 53)
-//            gyro = CMAcceleration(x: gyroX, y: gyroY, z: gyroZ)
-//            let gyroScale = (2048 / 180 * Double.pi / 4095.0)
-//            let gyroX = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 14, to: 27)) * gyroScale
-//            let gyroY = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 27, to: 40)) * gyroScale
-//            let gyroZ = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 40, to: 53)) * gyroScale
-//            gyro = CMAcceleration(x: gyroX, y: gyroY, z: gyroZ)
             gyro = NormalizedGyroFromData(data)
-//            print("gyro:\t\(gyroX),\t\(gyroY),\t\(gyroZ)")
-			
-//            let magX = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 53, to: 66)
-//            let magY = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 66, to: 79)
-//            let magZ = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 79, to: 92)
-//            magnetometer = CMAcceleration(x: magX, y: magY, z: magZ)
-//            let magScale = 2 * Double.pi / 4095.0
-//            let magX = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 53, to: 66)) * magScale
-//            let magY = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 66, to: 79)) * magScale
-//            let magZ = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 79, to: 92)) * magScale
-//            magnetometer = CMAcceleration(x: magX, y: magY, z: magZ)
             magnetometer = NormalizedMagnetometerFromData(data)
-//            print("magnetometer:\t\(Double(round(magnetometer.x * 10) / 10)),\t\(Double(round(magnetometer.y * 10) / 10)),\t\(Double(round(magnetometer.z * 10) / 10))")
-			
-//            let accX = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 92, to: 105)
-//            let accY = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 105, to: 118)
-//            let accZ = try DDControllerState.getSignedDouble(bitstring: bitstring, from: 118, to: 131)
-//            acceleration = CMAcceleration(x: accX, y: accY, z: accZ)
-//            let accScale = 8 * 9.8 / 4095.0
-//            let accX = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 92, to: 105)) * accScale
-//            let accY = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 105, to: 118)) * accScale
-//            let accZ = Double(try DDControllerState.getSignedInt(bitstring: bitstring, from: 118, to: 131)) * accScale
-//            acceleration = CMAcceleration(x: accX, y: accY, z: accZ)
             acceleration = NormalizedAccelerometerFromData(data)
-//            print("acceleration:\t\(Double(round(acceleration.x * 10) / 10)),\t\(Double(round(acceleration.y * 10) / 10)),\t\(Double(round(acceleration.z * 10) / 10))")
-            
-//            self.madgwick.update(withGx: gyroX, gy: gyroY, gz: gyroZ, ax: accX, ay: accY, az: accZ, mx: magX, my: magY, mz: magZ)
-//            self.madgwick.update(withGx: gyro.x, gy: gyro.y, gz: gyro.z,
-//                                 ax: acceleration.x, ay: acceleration.y, az: acceleration.z,
-//                                 mx: magnetometer.x, my: magnetometer.y, mz: magnetometer.z)
 			
 			let touchX = try DDControllerState.getInt(bitstring: bitstring, from: 131, to: 139)
 			let touchY = try DDControllerState.getInt(bitstring: bitstring, from: 139, to: 147)
@@ -154,48 +117,6 @@ internal class DDControllerState: CustomStringConvertible {
 		return result
 	}
 	
-	/// Gets the bits between `from` and `to` in `bitstring` and returns the signed double value.
-	///
-	/// Bug: This should interpret the bits as a two's complement value and return the signed double.
-	///      It currently returns the same value as `getInt` would, causing `gyro`, `acceleration`, and `magnetometer`
-	///      to be unsupported as of v1.0.
-	///
-	/// - parameter bitstring: A bitstring to be read.
-	/// - parameter from: The start index, inclusive.
-	/// - parameter to: The end index, exclusive.
-	private class func getSignedDouble(bitstring: String, from: Int, to: Int) throws -> Double {
-		let start = bitstring.index(bitstring.startIndex, offsetBy: from)
-		let end = bitstring.index(bitstring.startIndex, offsetBy: to)
-		let part = bitstring.substring(with: start..<end)
-		
-		guard let result = Int(part, radix: 2) else {
-			throw ParseError.failed
-		}
-		
-		// TODO: actually interpret the signed value. it's 13 bits, and the first is the sign.		
-		return Double(result)
-	}
-    
-    private class func getSignedInt(bitstring: String, from: Int, to: Int) throws -> Int {
-        let start = bitstring.index(bitstring.startIndex, offsetBy: from)
-//        let end = bitstring.index(bitstring.startIndex, offsetBy: to)
-        let end = bitstring.index(bitstring.startIndex, offsetBy: to - 1)
-        let part = bitstring.substring(with: start..<end)
-        let signEnd = bitstring.index(end, offsetBy: 1)
-        let sign = bitstring.substring(with: end..<signEnd)
-        
-        guard let intPart = Int(part, radix: 2) else {
-            throw ParseError.failed
-        }
-        
-        let signPart = (sign == "0" ? 1 : -1)
-        let result = signPart * intPart
-        
-//        print("part '\(part); result \(result)")
-        
-        return Int(result)
-    }
-    
 	/// Returns a bitstring from an input hex string.
 	/// - parameter data: The input hex string.
 	private class func parse(hexString: String) throws -> String {

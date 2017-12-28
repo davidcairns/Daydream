@@ -10,7 +10,7 @@
 
 int MagnetometerXFromData(NSData *data) {
     uint8_t *const bytes = (uint8_t *)data.bytes;
-    int xOri = (bytes[1] & 0x03) << 11 | (bytes[2] & 0xFF) << 3 | (bytes[3] & 0xE0) >> 5;
+    int xOri = (bytes[1] & 0x03) << 11 | (bytes[2] & 0xFF) << 3 | (bytes[3] & 0x80) >> 5;
     return (xOri << 19) >> 19;
 }
 int MagnetometerYFromData(NSData *data) {
@@ -64,18 +64,26 @@ CMAcceleration DCMakeVec3(double x, double y, double z) {
     return v;
 }
 
+CMAcceleration DCVec3Normalize(CMAcceleration v) {
+    const double magnitude = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    if (magnitude < 0.000001) {
+        return DCMakeVec3(0.0, 0.0, 0.0);
+    }
+    return DCMakeVec3(v.x / magnitude, v.y / magnitude, v.z / magnitude);
+}
+
 
 CMAcceleration NormalizedMagnetometerFromData(NSData *data) {
     const double orientationScale = 2 * M_PI / 4095.0;
-    return DCMakeVec3(-1.0 * orientationScale * MagnetometerXFromData(data),
-                      -1.0 * orientationScale * MagnetometerYFromData(data),
+    return DCMakeVec3(orientationScale * MagnetometerXFromData(data),
+                      orientationScale * MagnetometerYFromData(data),
                       orientationScale * MagnetometerZFromData(data));
 }
 CMAcceleration NormalizedAccelerometerFromData(NSData *data) {
     const double accelerationScale = 8 * 9.8 / 4095.0;
-    return DCMakeVec3(accelerationScale * AccelerationXFromData(data),
-                      accelerationScale * AccelerationYFromData(data),
-                      accelerationScale * AccelerationZFromData(data));
+    return DCVec3Normalize(DCMakeVec3(accelerationScale * AccelerationXFromData(data),
+                                      accelerationScale * AccelerationYFromData(data),
+                                      accelerationScale * AccelerationZFromData(data)));
 }
 CMAcceleration NormalizedGyroFromData(NSData *data) {
     const double gyroScale = 2048 / 180 * M_PI / 4095.0;
