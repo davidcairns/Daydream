@@ -35,10 +35,10 @@ extension CMQuaternion: CustomStringConvertible {
         let wy = w * y2
         let wz = w * z2
         
-        //        let t = CATransform3D(m11: CGFloat(1 - (yy + zz)),  m12: CGFloat(xy + wz),          m13: CGFloat(xz - wy),          m14: CGFloat(0),
-        //                              m21: CGFloat(xy - wz),        m22: CGFloat(1 - (xx + zz)),    m23: CGFloat(yz + wx),          m24: CGFloat(0),
-        //                              m31: CGFloat(xz + wy),        m32: CGFloat(yz - wx),          m33: CGFloat(1 - (xx + yy)),    m34: CGFloat(0),
-        //                              m41: CGFloat(0),              m42: CGFloat(0),                m43: CGFloat(0),                m44: CGFloat(1))
+//        let t = CATransform3D(m11: CGFloat(1 - (yy + zz)),  m12: CGFloat(xy + wz),          m13: CGFloat(xz - wy),          m14: CGFloat(0),
+//                              m21: CGFloat(xy - wz),        m22: CGFloat(1 - (xx + zz)),    m23: CGFloat(yz + wx),          m24: CGFloat(0),
+//                              m31: CGFloat(xz + wy),        m32: CGFloat(yz - wx),          m33: CGFloat(1 - (xx + yy)),    m34: CGFloat(0),
+//                              m41: CGFloat(0),              m42: CGFloat(0),                m43: CGFloat(0),                m44: CGFloat(1))
         let t = CATransform3D(m11: CGFloat(1 - (yy + zz)),  m12: CGFloat(xy - wz),          m13: CGFloat(xz + wy),          m14: CGFloat(0),
                               m21: CGFloat(xy + wz),        m22: CGFloat(1 - (xx + zz)),    m23: CGFloat(yz - wx),          m24: CGFloat(0),
                               m31: CGFloat(xz - wy),        m32: CGFloat(yz + wx),          m33: CGFloat(1 - (xx + yy)),    m34: CGFloat(0),
