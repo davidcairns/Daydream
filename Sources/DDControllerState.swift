@@ -145,3 +145,16 @@ internal class DDControllerState: CustomStringConvertible {
 		return padded
 	}
 }
+
+extension DDControllerState {
+    var orientation: CMQuaternion {
+        let angle = sqrt(magnetometer.x * magnetometer.x + magnetometer.y * magnetometer.y + magnetometer.z * magnetometer.z)
+        if angle > 0 {
+            let axis = Vect3(x: magnetometer.x / angle,
+                             y: magnetometer.y / angle,
+                             z: magnetometer.z / angle)
+            return CMQuaternion.from(axis: axis, angle: angle)
+        }
+        return CMQuaternion(x: 0, y: 0, z: 0, w: 1)
+    }
+}
