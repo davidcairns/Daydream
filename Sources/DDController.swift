@@ -50,31 +50,25 @@ public class DDController: NSObject {
 	var peripheral: CBPeripheral
 	
 	/// The `CBService`s that `peripheral` provides.
-	fileprivate var services: [CBService]
+	fileprivate var services: [CBService] = []
 	
 	// MARK: Input Devices
 	/// The touch pad of the device.
-	fileprivate(set) var touchpad: DDControllerTouchpad
+	fileprivate(set) var touchpad: DDControllerTouchpad = DDControllerTouchpad()
 	/// The "app" button, which is the top button on the front of the controller.
-	fileprivate(set) var appButton: DDControllerButton
+	fileprivate(set) var appButton: DDControllerButton = DDControllerButton()
 	/// The home button, which is the bottom button on the front of the controller.
-	fileprivate(set) var homeButton: DDControllerButton
+	fileprivate(set) var homeButton: DDControllerButton = DDControllerButton()
     /// Volume buttons are on the side.
-	fileprivate(set) var volumeUpButton: DDControllerButton
-	fileprivate(set) var volumeDownButton: DDControllerButton
+	fileprivate(set) var volumeUpButton: DDControllerButton = DDControllerButton()
+	fileprivate(set) var volumeDownButton: DDControllerButton = DDControllerButton()
     
     typealias OrientationChangeHandler = (Quaternion) -> Void
     var orientationChangedHandler: OrientationChangeHandler? = nil
     
 	
-	/// Warning: Call `DDController.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
+	/// Warning: Call `DDConnectionmanager.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
     public init(peripheral: CBPeripheral) {
-        self.services = []
-        self.touchpad = DDControllerTouchpad()
-        self.appButton = DDControllerButton()
-        self.homeButton = DDControllerButton()
-        self.volumeUpButton = DDControllerButton()
-        self.volumeDownButton = DDControllerButton()
 		self.peripheral = peripheral
 	}
 	
