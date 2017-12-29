@@ -18,7 +18,7 @@ extension NSNotification.Name {
 	public static let DDControllerDidUpdateBatteryLevel = NSNotification.Name(rawValue: "DDControllerDidUpdateBatteryLevel")
 }
 
-/// An instance of a Daydream View controller.
+/// Represents a single Daydream Controller.
 public class DDController: NSObject {	
 	/// An array of currently connected controllers.
 	static var controllers = [DDController]()
@@ -107,9 +107,6 @@ public class DDController: NSObject {
 		peripheral?.delegate = self
 		peripheral?.discoverServices(DDController.serviceUUIDs)
 	}
-    
-    var updates: Int = 0
-    var updatesStart: TimeInterval = 0
 }
 
 /// An extension of `DDController` that handles incoming data.
