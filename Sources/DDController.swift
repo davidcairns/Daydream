@@ -250,7 +250,6 @@ extension DDController: CBPeripheralDelegate {
         
 		// Update the touchpad's point
         if touchpad.point != state.touchPoint {
-//            print("touchpad point changed: \(state.touchPoint)")
             touchpad.point = state.touchPoint
         }
         
@@ -259,9 +258,6 @@ extension DDController: CBPeripheralDelegate {
             let orientation = state.orientation
             handler(orientation)
         }
-//        print("roll: \(orientation.roll)")
-//        print("pitch: \(orientation.pitch)")
-//        print("yaw: \(orientation.yaw)")
 		
 		// Update buttons
 		let buttons = state.buttons

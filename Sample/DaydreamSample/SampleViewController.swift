@@ -254,7 +254,7 @@ extension SampleViewController {
         controller.orientationChangedHandler = { (orientation) -> Void in
             if nil == self.homeQuaternion {
                 // Our "default" makes the graphic point directly "into" the screen.
-                let defaultQuaternion = CMQuaternion.from(axis: (x: 1.0, y: 0.0, z: 0.0), angle: -Double.pi / 2.0)
+                let defaultQuaternion = CMQuaternion.from(axis: Vect3Make(1.0, 0.0, 0.0), angle: -Double.pi / 2.0)
                 self.homeQuaternion = defaultQuaternion.times(quaternion: orientation.inverse)
             }
             let t = self.homeQuaternion!.times(quaternion: orientation)
@@ -272,4 +272,3 @@ extension SampleViewController {
 		print("Controller battery life is \(Int(battery * 100))%")
 	}
 }
-
