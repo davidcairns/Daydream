@@ -245,8 +245,7 @@ extension DDController: CBPeripheralDelegate {
 	
 	/// Updates the state of the controller's touchpad and buttons based on the hex string from the device.
     private func update(from data: Data) {
-        // Create an instance of DDControllerState from the hex string.
-        let state = DDControllerState(data: data)
+        let state = DCControllerStateMake(data)
         
 		// Update the touchpad's point
         if touchpad.point != state.touchPoint {
@@ -254,9 +253,7 @@ extension DDController: CBPeripheralDelegate {
         }
         
         if let handler = orientationChangedHandler {
-            // FIXME: Seems like yaw & pitch are flipped???
-            let orientation = state.orientation
-            handler(orientation)
+            handler(DCControllerStateGetOrientation(state))
         }
 		
 		// Update buttons

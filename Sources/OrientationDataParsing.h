@@ -7,6 +7,7 @@
 //
 
 #import <CoreMotion/CoreMotion.h>
+#import "Vect3.h"
 
 int MagnetometerXFromData(NSData *data);
 int MagnetometerYFromData(NSData *data);
@@ -20,12 +21,11 @@ int GyroXFromData(NSData *data);
 int GyroYFromData(NSData *data);
 int GyroZFromData(NSData *data);
 
-CMAcceleration DCMakeVec3(double x, double y, double z);
+Vect3 DCMakeVec3(double x, double y, double z);
 
-CMAcceleration AdjustedMagnetometerFromData(NSData *data);
-CMAcceleration AdjustedAccelerometerFromData(NSData *data);
-CMAcceleration AdjustedGyroFromData(NSData *data);
-
+Vect3 AdjustedMagnetometerFromData(NSData *data);
+Vect3 AdjustedAccelerometerFromData(NSData *data);
+Vect3 AdjustedGyroFromData(NSData *data);
 
 // Touch Point
 double TouchPointX(NSData *data);

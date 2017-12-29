@@ -13,11 +13,11 @@
 		031BC8A61E43D8B90007BEA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */; };
 		031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8AE1E43DFC90007BEA3 /* DDController.swift */; };
 		031BC8B31E43DFC90007BEA3 /* DDControllerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8AF1E43DFC90007BEA3 /* DDControllerButton.swift */; };
-		031BC8B41E43DFC90007BEA3 /* DDControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B01E43DFC90007BEA3 /* DDControllerState.swift */; };
 		031BC8B51E43DFC90007BEA3 /* DDControllerTouchpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B11E43DFC90007BEA3 /* DDControllerTouchpad.swift */; };
 		031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */; };
 		DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
 		DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
+		DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5961FF6F89200339EF8 /* DCControllerState.m */; };
 		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
 		DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
 		DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D01FF5D43400725486 /* Data+Extensions.swift */; };
@@ -33,13 +33,14 @@
 		031BC8A71E43D8B90007BEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031BC8AE1E43DFC90007BEA3 /* DDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDController.swift; path = ../Sources/DDController.swift; sourceTree = "<group>"; };
 		031BC8AF1E43DFC90007BEA3 /* DDControllerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDControllerButton.swift; path = ../Sources/DDControllerButton.swift; sourceTree = "<group>"; };
-		031BC8B01E43DFC90007BEA3 /* DDControllerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDControllerState.swift; path = ../Sources/DDControllerState.swift; sourceTree = "<group>"; };
 		031BC8B11E43DFC90007BEA3 /* DDControllerTouchpad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDControllerTouchpad.swift; path = ../Sources/DDControllerTouchpad.swift; sourceTree = "<group>"; };
 		031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
 		DF47D58F1FF6F02700339EF8 /* Quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Quaternion.h; path = ../Sources/Quaternion.h; sourceTree = "<group>"; };
 		DF47D5901FF6F02700339EF8 /* Quaternion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Quaternion.m; path = ../Sources/Quaternion.m; sourceTree = "<group>"; };
 		DF47D5921FF6F10400339EF8 /* Vect3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vect3.h; path = ../Sources/Vect3.h; sourceTree = "<group>"; };
 		DF47D5931FF6F10400339EF8 /* Vect3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Vect3.m; path = ../Sources/Vect3.m; sourceTree = "<group>"; };
+		DF47D5951FF6F89200339EF8 /* DCControllerState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCControllerState.h; path = ../Sources/DCControllerState.h; sourceTree = "<group>"; };
+		DF47D5961FF6F89200339EF8 /* DCControllerState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCControllerState.m; path = ../Sources/DCControllerState.m; sourceTree = "<group>"; };
 		DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DaydreamSample-Bridging-Header.h"; sourceTree = "<group>"; };
 		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrientationDataParsing.h; path = ../Sources/OrientationDataParsing.h; sourceTree = "<group>"; };
 		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrientationDataParsing.m; path = ../Sources/OrientationDataParsing.m; sourceTree = "<group>"; };
@@ -98,8 +99,9 @@
 				DFEF11D01FF5D43400725486 /* Data+Extensions.swift */,
 				DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */,
 				031BC8AF1E43DFC90007BEA3 /* DDControllerButton.swift */,
-				031BC8B01E43DFC90007BEA3 /* DDControllerState.swift */,
 				031BC8B11E43DFC90007BEA3 /* DDControllerTouchpad.swift */,
+				DF47D5951FF6F89200339EF8 /* DCControllerState.h */,
+				DF47D5961FF6F89200339EF8 /* DCControllerState.m */,
 				DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */,
 				DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */,
 				DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */,
@@ -184,12 +186,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				031BC8B41E43DFC90007BEA3 /* DDControllerState.swift in Sources */,
 				031BC89E1E43D8B90007BEA3 /* SampleViewController.swift in Sources */,
 				031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */,
 				DFEF11D31FF5D44700725486 /* CoreBluetooth+Extensions.swift in Sources */,
 				031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */,
 				DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */,
+				DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */,
 				DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */,
 				DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,

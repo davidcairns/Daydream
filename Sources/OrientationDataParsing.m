@@ -56,40 +56,25 @@ int GyroZFromData(NSData *data) {
     return (zGyro << 19) >> 19;
 }
 
-CMAcceleration DCMakeVec3(double x, double y, double z) {
-    CMAcceleration v;
-    v.x = x;
-    v.y = y;
-    v.z = z;
-    return v;
-}
-
-CMAcceleration DCVec3Normalize(CMAcceleration v) {
-    const double magnitude = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-    if (magnitude < 0.000001) {
-        return DCMakeVec3(0.0, 0.0, 0.0);
-    }
-    return DCMakeVec3(v.x / magnitude, v.y / magnitude, v.z / magnitude);
-}
 
 
-CMAcceleration AdjustedMagnetometerFromData(NSData *data) {
+Vect3 AdjustedMagnetometerFromData(NSData *data) {
     const double orientationScale = 2 * M_PI / 4095.0;
-    return DCMakeVec3(orientationScale * MagnetometerXFromData(data),
-                      orientationScale * MagnetometerYFromData(data),
-                      orientationScale * MagnetometerZFromData(data));
+    return Vect3Make(orientationScale * MagnetometerXFromData(data),
+                     orientationScale * MagnetometerYFromData(data),
+                     orientationScale * MagnetometerZFromData(data));
 }
-CMAcceleration AdjustedAccelerometerFromData(NSData *data) {
+Vect3 AdjustedAccelerometerFromData(NSData *data) {
     const double accelerationScale = 8 * 9.8 / 4095.0;
-    return DCVec3Normalize(DCMakeVec3(accelerationScale * AccelerationXFromData(data),
-                                      accelerationScale * AccelerationYFromData(data),
-                                      accelerationScale * AccelerationZFromData(data)));
+    return Vect3Normalize(Vect3Make(accelerationScale * AccelerationXFromData(data),
+                                    accelerationScale * AccelerationYFromData(data),
+                                    accelerationScale * AccelerationZFromData(data)));
 }
-CMAcceleration AdjustedGyroFromData(NSData *data) {
+Vect3 AdjustedGyroFromData(NSData *data) {
     const double gyroScale = 2048 / 180 * M_PI / 4095.0;
-    return DCMakeVec3(gyroScale * GyroXFromData(data),
-                      gyroScale * GyroYFromData(data),
-                      gyroScale * GyroZFromData(data));
+    return Vect3Make(gyroScale * GyroXFromData(data),
+                     gyroScale * GyroYFromData(data),
+                     gyroScale * GyroZFromData(data));
 }
 
 
