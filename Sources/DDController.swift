@@ -80,7 +80,7 @@ public class DDController: NSObject {
 	/// The volume down button on the right side of the controller.
 	fileprivate(set) var volumeDownButton: DDControllerButton
     
-    typealias OrientationChangeHandler = (CMQuaternion) -> Void
+    typealias OrientationChangeHandler = (Quaternion) -> Void
     var orientationChangedHandler: OrientationChangeHandler? = nil
     
 	

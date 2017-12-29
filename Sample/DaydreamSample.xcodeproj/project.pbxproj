@@ -19,7 +19,6 @@
 		DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
 		DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
 		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
-		DFEF11CD1FF5D3EF00725486 /* Quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CC1FF5D3EF00725486 /* Quaternion.swift */; };
 		DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
 		DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D01FF5D43400725486 /* Data+Extensions.swift */; };
 		DFEF11D31FF5D44700725486 /* CoreBluetooth+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */; };
@@ -44,7 +43,6 @@
 		DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DaydreamSample-Bridging-Header.h"; sourceTree = "<group>"; };
 		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrientationDataParsing.h; path = ../Sources/OrientationDataParsing.h; sourceTree = "<group>"; };
 		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrientationDataParsing.m; path = ../Sources/OrientationDataParsing.m; sourceTree = "<group>"; };
-		DFEF11CC1FF5D3EF00725486 /* Quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Quaternion.swift; path = ../Sources/Quaternion.swift; sourceTree = "<group>"; };
 		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DDConnectionManager.swift; path = ../Sources/DDConnectionManager.swift; sourceTree = "<group>"; };
 		DFEF11D01FF5D43400725486 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data+Extensions.swift"; path = "../Sources/Data+Extensions.swift"; sourceTree = "<group>"; };
 		DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CoreBluetooth+Extensions.swift"; path = "../Sources/CoreBluetooth+Extensions.swift"; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 				DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */,
 				DF47D5921FF6F10400339EF8 /* Vect3.h */,
 				DF47D5931FF6F10400339EF8 /* Vect3.m */,
-				DFEF11CC1FF5D3EF00725486 /* Quaternion.swift */,
 				DF47D58F1FF6F02700339EF8 /* Quaternion.h */,
 				DF47D5901FF6F02700339EF8 /* Quaternion.m */,
 			);
@@ -195,7 +192,6 @@
 				DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */,
 				DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */,
 				DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */,
-				DFEF11CD1FF5D3EF00725486 /* Quaternion.swift in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,
 				DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */,
 				DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */,

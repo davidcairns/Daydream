@@ -50,7 +50,7 @@ class SampleViewController: UIViewController {
 	fileprivate let buttonToControllerRatio: CGFloat = 0.35
 	fileprivate let volumeButtonToControllerRatio: CGFloat = 0.025
     
-    fileprivate var homeQuaternion: CMQuaternion? = nil
+    fileprivate var homeQuaternion: Quaternion? = nil
 	
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         containerView = UIView()
@@ -254,11 +254,11 @@ extension SampleViewController {
         controller.orientationChangedHandler = { (orientation) -> Void in
             if nil == self.homeQuaternion {
                 // Our "default" makes the graphic point directly "into" the screen.
-                let defaultQuaternion = CMQuaternion.from(axis: Vect3Make(1.0, 0.0, 0.0), angle: -Double.pi / 2.0)
-                self.homeQuaternion = defaultQuaternion.times(quaternion: orientation.inverse)
+                let defaultQuaternion = QuaternionMakeFromAxisAngle(Vect3Make(1.0, 0.0, 0.0), -Double.pi / 2.0)
+                self.homeQuaternion = QuaternionTimesQuaternion(defaultQuaternion, QuaternionInverse(orientation))
             }
-            let t = self.homeQuaternion!.times(quaternion: orientation)
-            self.containerView.layer.transform = t.matrix
+            let t = QuaternionTimesQuaternion(self.homeQuaternion!, orientation)
+            self.containerView.layer.transform = CATransform3D.from(matrix: QuaternionGetMatrix(t))
         }
 	}
     
@@ -271,4 +271,13 @@ extension SampleViewController {
 		guard let battery = controller.batteryLevel else { return }
 		print("Controller battery life is \(Int(battery * 100))%")
 	}
+}
+
+extension CATransform3D {
+    static func from(matrix m: Matrix3x3) -> CATransform3D {
+        return CATransform3D(m11: CGFloat(m.m11), m12: CGFloat(m.m12), m13: CGFloat(m.m13), m14: CGFloat(m.m14),
+                             m21: CGFloat(m.m21), m22: CGFloat(m.m22), m23: CGFloat(m.m23), m24: CGFloat(m.m24),
+                             m31: CGFloat(m.m31), m32: CGFloat(m.m32), m33: CGFloat(m.m33), m34: CGFloat(m.m34),
+                             m41: CGFloat(m.m41), m42: CGFloat(m.m42), m43: CGFloat(m.m43), m44: CGFloat(m.m44))
+    }
 }
