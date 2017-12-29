@@ -11,12 +11,12 @@ import UIKit
 class DiscoveryViewController: UIViewController {
 	fileprivate let titleLabel: UILabel
 	fileprivate let subtitleLabel: UILabel
-	fileprivate let sampleViewController: SampleViewController
+	fileprivate var sampleViewController: SampleViewController? = nil
+    fileprivate let connectionManager: DDConnectionManager = DDConnectionManager()
 	
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		titleLabel = UILabel()
 		subtitleLabel = UILabel()
-		sampleViewController = SampleViewController()
 		
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 		
@@ -43,47 +43,43 @@ class DiscoveryViewController: UIViewController {
 		
 		titleLabel.text = "Looking for controllers..."
 		subtitleLabel.text = "Ensure Bluetooth is on, then make your Daydream View controller discoverable by pressing the bottom button."
+        
+        connectionManager.delegate = self
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
 		discoverControllers()
 	}
 	
 	func discoverControllers() {
-		NotificationCenter.default.addObserver(self, selector: #selector(DiscoveryViewController.controllerDidConnect(_:)), name: NSNotification.Name.DDControllerDidConnect, object: nil)
-
 		do {
-			try DDController.startDaydreamControllerDiscovery()
-			
+			try connectionManager.startDaydreamControllerDiscovery()
 		} catch DDControllerError.bluetoothOff {
 			print("Bluetooth is off.")
-			
 		} catch _ {}
 	}
 }
 
-// MARK: - DDController Notifications
-extension DiscoveryViewController {
-	func controllerDidConnect(_ notification: Notification) {
-		sampleViewController.modalTransitionStyle = .crossDissolve
-		sampleViewController.modalPresentationStyle = .overCurrentContext
-		present(sampleViewController, animated: true, completion: nil)
-	}
+extension DiscoveryViewController: DDConnectionManagerDelegate {
+    func didConnect(to controller: DDController) {
+        if nil == sampleViewController {
+            sampleViewController = SampleViewController()
+            sampleViewController?.controller = controller
+        }
+        sampleViewController!.modalTransitionStyle = .crossDissolve
+        sampleViewController!.modalPresentationStyle = .overCurrentContext
+        present(sampleViewController!, animated: true, completion: nil)
+    }
+    
+    func didDisconnect(from controller: DDController) {
+        dismiss(animated: true) { [weak self] in
+            self!.sampleViewController = nil
+            self!.discoverControllers()
+        }
+    }
 }

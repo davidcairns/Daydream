@@ -15,9 +15,7 @@ enum DDControllerError: Error {
 }
 
 extension NSNotification.Name {
-	public static let DDControllerDidConnect = NSNotification.Name(rawValue: "DDControllerDidConnect")
 	public static let DDControllerDidUpdateBatteryLevel = NSNotification.Name(rawValue: "DDControllerDidUpdateBatteryLevel")
-	public static let DDControllerDidDisconnect = NSNotification.Name("DDControllerDidDisconnect")
 }
 
 /// An instance of a Daydream View controller.
@@ -26,7 +24,7 @@ public class DDController: NSObject {
 	static var controllers = [DDController]()
 	
 	/// The internal `DDConnectionManager`, which manages connected devices.
-	static fileprivate let manager = DDConnectionManager()
+	static let manager = DDConnectionManager()
 	
 	/// The services offered by the Daydream View controller, representing:
 	/// - FE55: Controller state
@@ -102,39 +100,6 @@ public class DDController: NSObject {
 		self.peripheral = peripheral
 	}
 	
-	// MARK: - Controller Discovery
-	
-	/// Starts discovery of Daydream View controllers.
-	///
-	/// To be notified when a controller connects, subscribe to the `DDControllerDidConnect` notification.
-	/// To be notified when a controller disconnects, subscribe to the `DDControllerDidDisconnect` notification.
-	/// The `object` on the notification will be the newly connected or disconnected `DDController`.
-	///
-	/// This function throws a `DDControllerError` if Bluetooth is turned off.
-	class func startDaydreamControllerDiscovery() throws {
-		guard let bluetoothManager = manager.bluetoothManager else { return }
-		
-		// Bluetooth is off, return an error
-		if bluetoothManager.state == .poweredOff {
-			throw DDControllerError.bluetoothOff
-		}
-		
-		// Start searching the next time we encounter a state change
-		manager.shouldSearchForDevices = true
-		
-		// We're already scanning, return
-		guard !bluetoothManager.isScanning else { return }
-	}
-	
-	/// Stops discovery of Daydream View controllers.
-	class func stopDaydreamControllerDiscovery() {
-		guard let bluetoothManager = manager.bluetoothManager else { return }
-		manager.shouldSearchForDevices = false
-		
-		if bluetoothManager.isScanning {
-			bluetoothManager.stopScan()
-		}
-	}
 	
 	/// Sets up the `CBPeripheral` delegate and discovers its services.
 	/// Called by the `DDConnectionManager` when a valid controller is discovered.

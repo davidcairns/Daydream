@@ -90,12 +90,6 @@ class SampleViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		configureNotifications()
-	}
-	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		
@@ -105,19 +99,8 @@ class SampleViewController: UIViewController {
 		homeButtonOverlay.position = CGPoint(x: controllerImageView.bounds.width / 2, y: (controllerImageView.bounds.height * 0.58))
 	}
 
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
 	override var prefersStatusBarHidden: Bool {
 		return true
-	}
-	
-	func configureNotifications() {
-		NotificationCenter.default.addObserver(self, selector: #selector(SampleViewController.controllerDidConnect(_:)), name: NSNotification.Name.DDControllerDidConnect, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(SampleViewController.controllerDidDisconnect(_:)), name: NSNotification.Name.DDControllerDidDisconnect, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(SampleViewController.controllerDidUpdateBatteryLevel(_:)), name: NSNotification.Name.DDControllerDidUpdateBatteryLevel, object: nil)
 	}
 	
 	func showPress(layer: CAShapeLayer, pressed: Bool) {
@@ -127,6 +110,77 @@ class SampleViewController: UIViewController {
 		layer.isHidden = !pressed
 		CATransaction.setDisableActions(false)
 	}
+    
+    
+    var controller: DDController! = nil {
+        didSet {
+            guard let controller = controller else { return }
+            controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
+                let wasHidden = self.touchpadPointImageView.isHidden
+                let shouldBeHidden = point.equalTo(CGPoint.zero)
+                
+                if !shouldBeHidden {
+                    self.touchpadPointLeftConstraint?.constant = (point.x) * self.controllerImageView.bounds.width
+                    self.touchpadPointTopConstraint?.constant = (point.y) * self.controllerImageView.bounds.width
+                }
+                
+                if wasHidden != shouldBeHidden && !self.lastPoint.equalTo(CGPoint.zero) {
+                    // Animate hiding and showing the indicator
+                    let initialScale: CGFloat = wasHidden ? 1.15 : 1
+                    self.touchpadPointImageView.isHidden = false
+                    self.touchpadPointImageView.transform = CGAffineTransform(scaleX: initialScale, y: initialScale)
+                    
+                    UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
+                        let newScale: CGFloat = shouldBeHidden ? 1.15 : 1.0
+                        self.touchpadPointImageView.transform = CGAffineTransform(scaleX: newScale, y: newScale)
+                        self.touchpadPointImageView.alpha = shouldBeHidden ? 0.0 : 1.0
+                        
+                    }, completion: { (done: Bool) in
+                        self.touchpadPointImageView.transform = CGAffineTransform.identity
+                        self.touchpadPointImageView.isHidden = shouldBeHidden
+                    })
+                } else {
+                    // Animate the movement of the indicator
+                    UIView.animate(withDuration: 0.1, delay: 0, options: [.beginFromCurrentState], animations: {
+                        self.view.layoutIfNeeded()
+                    }, completion: nil)
+                }
+                
+                self.lastPoint = point
+            }
+            
+            controller.touchpad.button.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+                self.showPress(layer: self.touchpadButtonOverlay, pressed: pressed)
+            }
+            
+            controller.appButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+                self.showPress(layer: self.appButtonOverlay, pressed: pressed)
+            }
+            
+            controller.homeButton.pressedChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+                self.showPress(layer: self.homeButtonOverlay, pressed: pressed)
+                self.homeQuaternion = nil
+            }
+            
+            controller.volumeUpButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+                self.volumeUpImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Up") : #imageLiteral(resourceName: "Volume Up Pressed")
+            }
+            
+            controller.volumeDownButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+                self.volumeDownImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Down") : #imageLiteral(resourceName: "Volume Down Pressed")
+            }
+            
+            controller.orientationChangedHandler = { (orientation) -> Void in
+                if nil == self.homeQuaternion {
+                    // Our "default" makes the graphic point directly "into" the screen.
+                    let defaultQuaternion = QuaternionMakeFromAxisAngle(Vect3Make(1.0, 0.0, 0.0), -Double.pi / 2.0)
+                    self.homeQuaternion = QuaternionTimesQuaternion(defaultQuaternion, QuaternionInverse(orientation))
+                }
+                let t = QuaternionTimesQuaternion(self.homeQuaternion!, orientation)
+                self.containerView.layer.transform = CATransform3D.from(matrix: QuaternionGetMatrix(t))
+            }
+        }
+    }
 }
 
 // MARK: - View Layout
@@ -188,88 +242,6 @@ extension SampleViewController {
 		controllerImageView.layer.addSublayer(touchpadButtonOverlay)
 		controllerImageView.layer.addSublayer(appButtonOverlay)
 		controllerImageView.layer.addSublayer(homeButtonOverlay)
-	}
-}
-
-// MARK: - DDController Notifications
-extension SampleViewController {
-	func controllerDidConnect(_ notification: Notification) {
-		guard let controller = notification.object as? DDController else { return }
-		
-		controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
-			let wasHidden = self.touchpadPointImageView.isHidden
-			let shouldBeHidden = point.equalTo(CGPoint.zero)
-			
-			if !shouldBeHidden {
-                self.touchpadPointLeftConstraint?.constant = (point.x) * self.controllerImageView.bounds.width
-                self.touchpadPointTopConstraint?.constant = (point.y) * self.controllerImageView.bounds.width
-			}
-			
-			if wasHidden != shouldBeHidden && !self.lastPoint.equalTo(CGPoint.zero) {
-				// Animate hiding and showing the indicator
-				let initialScale: CGFloat = wasHidden ? 1.15 : 1
-				self.touchpadPointImageView.isHidden = false
-				self.touchpadPointImageView.transform = CGAffineTransform(scaleX: initialScale, y: initialScale)
-				
-				UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
-					let newScale: CGFloat = shouldBeHidden ? 1.15 : 1.0
-					self.touchpadPointImageView.transform = CGAffineTransform(scaleX: newScale, y: newScale)
-					self.touchpadPointImageView.alpha = shouldBeHidden ? 0.0 : 1.0
-					
-				}, completion: { (done: Bool) in
-					self.touchpadPointImageView.transform = CGAffineTransform.identity
-					self.touchpadPointImageView.isHidden = shouldBeHidden
-				})
-			} else {
-				// Animate the movement of the indicator
-				UIView.animate(withDuration: 0.1, delay: 0, options: [.beginFromCurrentState], animations: {
-					self.view.layoutIfNeeded()
-				}, completion: nil)
-			}
-			
-			self.lastPoint = point
-		}
-		
-		controller.touchpad.button.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
-			self.showPress(layer: self.touchpadButtonOverlay, pressed: pressed)
-		}
-		
-		controller.appButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
-			self.showPress(layer: self.appButtonOverlay, pressed: pressed)
-		}
-		
-		controller.homeButton.pressedChangedHandler = { (button: DDControllerButton, pressed: Bool) in
-			self.showPress(layer: self.homeButtonOverlay, pressed: pressed)
-            self.homeQuaternion = nil
-		}
-		
-		controller.volumeUpButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
-			self.volumeUpImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Up") : #imageLiteral(resourceName: "Volume Up Pressed")
-		}
-		
-		controller.volumeDownButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
-			self.volumeDownImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Down") : #imageLiteral(resourceName: "Volume Down Pressed")
-		}
-        
-        controller.orientationChangedHandler = { (orientation) -> Void in
-            if nil == self.homeQuaternion {
-                // Our "default" makes the graphic point directly "into" the screen.
-                let defaultQuaternion = QuaternionMakeFromAxisAngle(Vect3Make(1.0, 0.0, 0.0), -Double.pi / 2.0)
-                self.homeQuaternion = QuaternionTimesQuaternion(defaultQuaternion, QuaternionInverse(orientation))
-            }
-            let t = QuaternionTimesQuaternion(self.homeQuaternion!, orientation)
-            self.containerView.layer.transform = CATransform3D.from(matrix: QuaternionGetMatrix(t))
-        }
-	}
-    
-	func controllerDidDisconnect(_ notification: Notification) {
-		dismiss(animated: true, completion: nil)
-	}
-	
-	func controllerDidUpdateBatteryLevel(_ notification: Notification) {
-		guard let controller = notification.object as? DDController else { return }
-		guard let battery = controller.batteryLevel else { return }
-		print("Controller battery life is \(Int(battery * 100))%")
 	}
 }
 
