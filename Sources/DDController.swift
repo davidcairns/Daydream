@@ -210,7 +210,7 @@ extension DDController: CBPeripheralDelegate {
 		
 		// Update the device state based on the hex string representation of the `characteristic`'s value.
 		case .state where characteristic.service.kind == .state:
-            update(from: data.hexStringValue, data: data)
+            update(from: data)
 		
 		// The device returns the battery level as an integer out of 100.
 		// Convert it to a float and post the battery update notification.
@@ -244,9 +244,9 @@ extension DDController: CBPeripheralDelegate {
 	}
 	
 	/// Updates the state of the controller's touchpad and buttons based on the hex string from the device.
-    private func update(from hexString: String, data: Data) {
-		// Create an instance of DDControllerState from the hex string.
-        guard let state = DDControllerState(hexString: hexString, data: data) else { return }
+    private func update(from data: Data) {
+        // Create an instance of DDControllerState from the hex string.
+        let state = DDControllerState(data: data)
         
 		// Update the touchpad's point
         if touchpad.point != state.touchPoint {

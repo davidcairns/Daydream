@@ -196,14 +196,13 @@ extension SampleViewController {
 	func controllerDidConnect(_ notification: Notification) {
 		guard let controller = notification.object as? DDController else { return }
 		
-		let touchpadMaxPoint: CGFloat = 250.0
 		controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
 			let wasHidden = self.touchpadPointImageView.isHidden
 			let shouldBeHidden = point.equalTo(CGPoint.zero)
 			
 			if !shouldBeHidden {
-				self.touchpadPointLeftConstraint?.constant = (point.x / touchpadMaxPoint) * self.controllerImageView.bounds.width
-				self.touchpadPointTopConstraint?.constant = (point.y / touchpadMaxPoint) * self.controllerImageView.bounds.width
+                self.touchpadPointLeftConstraint?.constant = (point.x) * self.controllerImageView.bounds.width
+                self.touchpadPointTopConstraint?.constant = (point.y) * self.controllerImageView.bounds.width
 			}
 			
 			if wasHidden != shouldBeHidden && !self.lastPoint.equalTo(CGPoint.zero) {

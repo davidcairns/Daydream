@@ -73,21 +73,32 @@ CMAcceleration DCVec3Normalize(CMAcceleration v) {
 }
 
 
-CMAcceleration NormalizedMagnetometerFromData(NSData *data) {
+CMAcceleration AdjustedMagnetometerFromData(NSData *data) {
     const double orientationScale = 2 * M_PI / 4095.0;
     return DCMakeVec3(orientationScale * MagnetometerXFromData(data),
                       orientationScale * MagnetometerYFromData(data),
                       orientationScale * MagnetometerZFromData(data));
 }
-CMAcceleration NormalizedAccelerometerFromData(NSData *data) {
+CMAcceleration AdjustedAccelerometerFromData(NSData *data) {
     const double accelerationScale = 8 * 9.8 / 4095.0;
     return DCVec3Normalize(DCMakeVec3(accelerationScale * AccelerationXFromData(data),
                                       accelerationScale * AccelerationYFromData(data),
                                       accelerationScale * AccelerationZFromData(data)));
 }
-CMAcceleration NormalizedGyroFromData(NSData *data) {
+CMAcceleration AdjustedGyroFromData(NSData *data) {
     const double gyroScale = 2048 / 180 * M_PI / 4095.0;
     return DCMakeVec3(gyroScale * GyroXFromData(data),
                       gyroScale * GyroYFromData(data),
                       gyroScale * GyroZFromData(data));
+}
+
+
+// MARK: - 
+double TouchPointX(NSData *data) {
+    uint8_t *const bytes = (uint8_t *)data.bytes;
+    return ((bytes[16] & 0x1F) << 3 | (bytes[17] & 0xE0) >> 5) / 255.0;
+}
+double TouchPointY(NSData *data) {
+    uint8_t *const bytes = (uint8_t *)data.bytes;
+    return ((bytes[17] & 0x1F) << 3 | (bytes[18] & 0xE0) >> 5) / 255.0;
 }

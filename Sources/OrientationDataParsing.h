@@ -22,6 +22,11 @@ int GyroZFromData(NSData *data);
 
 CMAcceleration DCMakeVec3(double x, double y, double z);
 
-CMAcceleration NormalizedMagnetometerFromData(NSData *data);
-CMAcceleration NormalizedAccelerometerFromData(NSData *data);
-CMAcceleration NormalizedGyroFromData(NSData *data);
+CMAcceleration AdjustedMagnetometerFromData(NSData *data);
+CMAcceleration AdjustedAccelerometerFromData(NSData *data);
+CMAcceleration AdjustedGyroFromData(NSData *data);
+
+
+// Touch Point
+double TouchPointX(NSData *data);
+double TouchPointY(NSData *data);

@@ -52,20 +52,18 @@ internal class DDControllerState: CustomStringConvertible {
 		return result
 	}
 	
-	/// The bit string representing this controller state.
-	private var bitstring: String
-	
 	/// A `OptionSet` used for representing which buttons are currently being pressed.
-	struct Buttons: OptionSet, CustomStringConvertible {
+	struct Buttons: OptionSet {
 		let rawValue: Int
 		
 		init(rawValue: Int) {
 			self.rawValue = rawValue
 		}
-		
-		var description: String {
-			return String(rawValue, radix: 2)
-		}
+        init(data: Data) {
+            self.rawValue = data.withUnsafeBytes { (pointer: UnsafePointer<UInt8>) -> Int in
+                return Int(pointer.advanced(by: 18).pointee)
+            }
+        }
 		
 		static let click = Buttons(rawValue: 1 << 0)
 		static let home = Buttons(rawValue: 1 << 1)
@@ -76,73 +74,12 @@ internal class DDControllerState: CustomStringConvertible {
 	
 	/// The initializer for `DDControllerState`.
 	/// - parameter data: A hex string from the Daydream View controller representing the state.
-    init?(hexString: String, data: Data) {
-		do {
-			bitstring = try DDControllerState.parse(hexString: hexString)
-			
-            gyro = NormalizedGyroFromData(data)
-            magnetometer = NormalizedMagnetometerFromData(data)
-            acceleration = NormalizedAccelerometerFromData(data)
-			
-			let touchX = try DDControllerState.getInt(bitstring: bitstring, from: 131, to: 139)
-			let touchY = try DDControllerState.getInt(bitstring: bitstring, from: 139, to: 147)
-			touchPoint = CGPoint(x: touchX, y: touchY)
-			
-			// app only: 10000
-			// app and home: 11000
-			let buttonsBits = try DDControllerState.getInt(bitstring: bitstring, from: 147, to: 152)
-			buttons = Buttons(rawValue: buttonsBits)
-			
-		} catch _ {
-			return nil
-		}
-	}
-	
-	// MARK: - Parsing
-	private enum ParseError: Error {
-		case failed
-	}
-	
-	/// Gets the bits between `from` and `to` in `bitstring` and returns the integer value.
-	/// - parameter bitstring: A bitstring to be read.
-	/// - parameter from: The start index, inclusive.
-	/// - parameter to: The end index, exclusive.
-	private class func getInt(bitstring: String, from: Int, to: Int) throws -> Int {
-		let start = bitstring.index(bitstring.startIndex, offsetBy: from)
-		let end = bitstring.index(bitstring.startIndex, offsetBy: to)
-		let part = bitstring.substring(with: start..<end)
-		guard let result = Int(part, radix: 2) else {
-			throw ParseError.failed
-		}
-		return result
-	}
-	
-	/// Returns a bitstring from an input hex string.
-	/// - parameter data: The input hex string.
-	private class func parse(hexString: String) throws -> String {
-		var bitchain = ""
-		for i in stride(from: 2, to: hexString.characters.count + 1, by: 2) {
-			let start = hexString.index(hexString.startIndex, offsetBy: i-2)
-			let end = hexString.index(hexString.startIndex, offsetBy: i)
-			let part = hexString.substring(with: start..<end)
-			guard let hexInt = Int(part, radix: 16) else {
-				throw ParseError.failed
-			}
-			let binString = String(hexInt, radix: 2)
-			bitchain += DDControllerState.zeroPad(string: binString, to: 8)
-		}
-		return bitchain
-	}
-	
-	/// Zero pads a bitstring to a given size.
-	/// - parameter string: A bit string.
-	/// - paramter size: The final desired zero-padded size.
-	private class func zeroPad(string: String, to size: Int) -> String {
-		var padded = string
-		for _ in 0..<(size - string.characters.count) {
-			padded = "0" + padded
-		}
-		return padded
+    init(data: Data) {
+        gyro = AdjustedGyroFromData(data)
+        magnetometer = AdjustedMagnetometerFromData(data)
+        acceleration = AdjustedAccelerometerFromData(data)
+        touchPoint = CGPoint(x: TouchPointX(data), y: TouchPointY(data))
+        buttons = Buttons(data: data)
 	}
 }
 
