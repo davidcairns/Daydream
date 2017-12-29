@@ -14,18 +14,8 @@ enum DDControllerError: Error {
 	case bluetoothOff
 }
 
-extension NSNotification.Name {
-	public static let DDControllerDidUpdateBatteryLevel = NSNotification.Name(rawValue: "DDControllerDidUpdateBatteryLevel")
-}
-
 /// Represents a single Daydream Controller.
 public class DDController: NSObject {	
-	/// An array of currently connected controllers.
-	static var controllers = [DDController]()
-	
-	/// The internal `DDConnectionManager`, which manages connected devices.
-	static let manager = DDConnectionManager()
-	
 	/// The services offered by the Daydream View controller, representing:
 	/// - FE55: Controller state
 	/// - 180F: Battery level
@@ -57,7 +47,7 @@ public class DDController: NSObject {
 	
 	// MARK: Internal
 	/// The internal `CBPeripheral` represented by this controller instance.
-	var peripheral: CBPeripheral?
+	var peripheral: CBPeripheral
 	
 	/// The `CBService`s that `peripheral` provides.
 	fileprivate var services: [CBService]
@@ -65,62 +55,48 @@ public class DDController: NSObject {
 	// MARK: Input Devices
 	/// The touch pad of the device.
 	fileprivate(set) var touchpad: DDControllerTouchpad
-	
 	/// The "app" button, which is the top button on the front of the controller.
 	fileprivate(set) var appButton: DDControllerButton
-	
 	/// The home button, which is the bottom button on the front of the controller.
 	fileprivate(set) var homeButton: DDControllerButton
-	
-	/// The volume up button on the right side of the controller.
+    /// Volume buttons are on the side.
 	fileprivate(set) var volumeUpButton: DDControllerButton
-	
-	/// The volume down button on the right side of the controller.
 	fileprivate(set) var volumeDownButton: DDControllerButton
     
     typealias OrientationChangeHandler = (Quaternion) -> Void
     var orientationChangedHandler: OrientationChangeHandler? = nil
     
 	
-	// MARK: - Initializers
-	
-	/// Warning: Use the convenience initializer and provide a valid `CBPeripheral` instead.
-	override init() {
-		self.services = []
-		self.touchpad = DDControllerTouchpad()
-		self.appButton = DDControllerButton()
-		self.homeButton = DDControllerButton()
-		self.volumeUpButton = DDControllerButton()
-		self.volumeDownButton = DDControllerButton()
-	}
-	
 	/// Warning: Call `DDController.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
-	public convenience init(peripheral: CBPeripheral) {
-		self.init()
+    public init(peripheral: CBPeripheral) {
+        self.services = []
+        self.touchpad = DDControllerTouchpad()
+        self.appButton = DDControllerButton()
+        self.homeButton = DDControllerButton()
+        self.volumeUpButton = DDControllerButton()
+        self.volumeDownButton = DDControllerButton()
 		self.peripheral = peripheral
 	}
 	
+    // TODO: Implement this accepting a callback!
+    public func updateBatteryLevel() {
+        guard let batteryServiceIndex = services.index(where: { $0.kind == .battery }) else { return }
+        let batteryService = services[batteryServiceIndex]
+        guard let batteryLevel = batteryService.characteristics?[0] else { return }
+        peripheral.readValue(for: batteryLevel)
+    }
+    
 	
 	/// Sets up the `CBPeripheral` delegate and discovers its services.
 	/// Called by the `DDConnectionManager` when a valid controller is discovered.
 	func didConnect() {
-		peripheral?.delegate = self
-		peripheral?.discoverServices(DDController.serviceUUIDs)
+		peripheral.delegate = self
+		peripheral.discoverServices(DDController.serviceUUIDs)
 	}
 }
 
 /// An extension of `DDController` that handles incoming data.
 extension DDController: CBPeripheralDelegate {
-	/// Updates the controller's battery level.
-	/// To be notified when the battery level update completes, subscribe to the `DDControllerDidUpdateBatteryLevel` notification.
-	/// The `object` on the notification will be an instance of `DDController` with the updated `batteryLevel`.
-	public func updateBatteryLevel() {
-		guard let batteryServiceIndex = services.index(where: { $0.kind == .battery }) else { return }
-		let batteryService = services[batteryServiceIndex]
-		guard let batteryLevel = batteryService.characteristics?[0] else { return }
-		peripheral?.readValue(for: batteryLevel)
-	}
-	
 	/// Called when services are discovered on the `peripheral`.
 	public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
 		guard let peripheralServices = peripheral.services else { return }
@@ -154,7 +130,7 @@ extension DDController: CBPeripheralDelegate {
 				peripheral.setNotifyValue(true, for: characteristic)
 				
 			// The battery and device info services don't support notifications, so simply read their value once.
-			// To get the latest battery level of the controller, call `updateBatteryLevel` and subscribe to the `DDControllerDidUpdateBatteryLevel` notification.
+			// To get the latest battery level of the controller, call `updateBatteryLevel`.
 			case .battery,
 			     .deviceInfo where characteristic.kind != .unknown:
 				peripheral.readValue(for: characteristic)
@@ -178,7 +154,6 @@ extension DDController: CBPeripheralDelegate {
 		// Convert it to a float and post the battery update notification.
 		case .batteryLevel where characteristic.service.kind == .battery:
 			batteryLevel = Float(data.intValue) / Float(100)
-			NotificationCenter.default.post(name: NSNotification.Name.DDControllerDidUpdateBatteryLevel, object: self)
 			
 		// Device info characteristics
 		case .manufacturer:
@@ -208,22 +183,19 @@ extension DDController: CBPeripheralDelegate {
 	/// Updates the state of the controller's touchpad and buttons based on the hex string from the device.
     private func update(from data: Data) {
         let state = DCControllerStateMake(data)
-        
-		// Update the touchpad's point
-        if touchpad.point != state.touchPoint {
-            touchpad.point = state.touchPoint
-        }
-        
-        if let handler = orientationChangedHandler {
-            handler(DCControllerStateGetOrientation(state))
-        }
 		
-		// Update buttons
+		// Update touchpad and buttons
+        touchpad.point = state.touchPoint
+        
 		let buttons = state.buttons
 		touchpad.button.pressed = buttons.contains(.click)
 		appButton.pressed = buttons.contains(.app)
 		homeButton.pressed = buttons.contains(.home)
 		volumeUpButton.pressed = buttons.contains(.volumeUp)
 		volumeDownButton.pressed = buttons.contains(.volumeDown)
+        
+        if let handler = orientationChangedHandler {
+            handler(DCControllerStateGetOrientation(state))
+        }
 	}
 }

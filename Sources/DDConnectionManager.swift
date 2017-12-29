@@ -22,6 +22,9 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
     
     var bluetoothManager: CBCentralManager!
     
+    /// An array of currently connected controllers.
+    var controllers = [DDController]()
+    
     var delegate: DDConnectionManagerDelegate? = nil
     
     override init() {
@@ -71,19 +74,19 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         guard let name = peripheral.name, name.contains("Daydream controller") else { return }
         
-        // Create a `DDController` instance, add it to `DDController.controllers`, and connect to it.
+        // Create a `DDController` instance, add it to `controllers`, and connect to it.
         let newController = DDController(peripheral: peripheral)
-        DDController.controllers.append(newController)
+        controllers.append(newController)
         central.connect(peripheral, options: nil)
     }
     
     /// Called when a Daydream View controller connects.
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Get the controller that matches the peripheral that just connected.
-        guard let controllerIndex = DDController.controllers.index(where: { (controller) -> Bool in
+        guard let controllerIndex = controllers.index(where: { (controller) -> Bool in
             return controller.peripheral == peripheral
         }) else { return }
-        let controller = DDController.controllers[controllerIndex]
+        let controller = controllers[controllerIndex]
         
         // Notify the controller and our delegate that we're connected.
         controller.didConnect()
@@ -93,24 +96,24 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
     /// Called when a Daydream View controller fails to connect.
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Get the controller that matches the peripheral that just failed to connect.
-        guard let controllerIndex = DDController.controllers.index(where: { (controller) -> Bool in
+        guard let controllerIndex = controllers.index(where: { (controller) -> Bool in
             return controller.peripheral == peripheral
         }) else { return }
         
-        // Remove the controller from `DDController.controllers`.
-        DDController.controllers.remove(at: controllerIndex)
+        // Remove the controller from `controllers`.
+        controllers.remove(at: controllerIndex)
     }
     
     /// Called when a Daydream View controller disconnects.
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Get the controller that matches the peripheral that just failed to connect.
-        guard let controllerIndex = DDController.controllers.index(where: { (controller) -> Bool in
+        guard let controllerIndex = controllers.index(where: { (controller) -> Bool in
             return controller.peripheral == peripheral
         }) else { return }
         
         // Notify the controller that it's connected and post the `DDControllerDidDisconnect` notification.
-        let controller = DDController.controllers[controllerIndex]
+        let controller = controllers[controllerIndex]
         delegate?.didDisconnect(from: controller)
-        DDController.controllers.remove(at: controllerIndex)
+        controllers.remove(at: controllerIndex)
     }
 }
