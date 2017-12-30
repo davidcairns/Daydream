@@ -29,7 +29,12 @@ NSString * _Nonnull DCConnectionManagerErrorDomain = @"DCConnectionManagerErrorD
 
 // MARK: - Controller Discovery
 - (void)startDaydreamControllerDiscovery {
-    if(self.bluetoothManager.state == CBManagerStatePoweredOff) {
+    if (@available(macOS 10.13, *)) {
+        if(self.bluetoothManager.state == CBManagerStatePoweredOff) {
+            return;
+        }
+    } else {
+        // Fallback on earlier versions
         return;
     }
     
@@ -37,16 +42,27 @@ NSString * _Nonnull DCConnectionManagerErrorDomain = @"DCConnectionManagerErrorD
 }
 - (void)stopDaydreamControllerDiscovery {
     self.shouldSearchForDevices = NO;
-    if(self.bluetoothManager.isScanning) {
-        [self.bluetoothManager stopScan];
+    if (@available(macOS 10.13, *)) {
+        if(self.bluetoothManager.isScanning) {
+            [self.bluetoothManager stopScan];
+        }
+    } else {
+        // Fallback on earlier versions
+        NSLog(@"CoreBluetooth scanning not available before macos 10.13!");
+        return;
     }
 }
 
 /// MARK: - CBCentralManagerDelegate
 /// Called when the Bluetooth manager updates its state.
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-    if(central.state != CBManagerStatePoweredOn) {
-        // Bluetooth isn't on
+    if (@available(macOS 10.13, *)) {
+        if(central.state != CBManagerStatePoweredOn) {
+            // Bluetooth isn't on
+            return;
+        }
+    } else {
+        // Fallback on earlier versions
         return;
     }
     

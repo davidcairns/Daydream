@@ -6,7 +6,7 @@
 //  Copyright © 2017 Daydream. All rights reserved.
 //
 
-#import <CoreMotion/CoreMotion.h>
+#import <Foundation/Foundation.h>
 #import "Vect3.h"
 
 int MagnetometerXFromData(NSData *data);
