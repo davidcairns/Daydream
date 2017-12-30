@@ -7,3 +7,4 @@
 #import "Quaternion.h"
 #import "DCControllerState.h"
 #import "DCControllerButton.h"
+#import "CoreBluetooth+Extensions.h"

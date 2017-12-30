@@ -21,9 +21,9 @@
 		DF47D59D1FF70D2E00339EF8 /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
 		DF47D5A01FF70EBE00339EF8 /* DCControllerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */; };
 		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
+		DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */; };
 		DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
 		DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D01FF5D43400725486 /* Data+Extensions.swift */; };
-		DFEF11D31FF5D44700725486 /* CoreBluetooth+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,9 +51,10 @@
 		DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DaydreamSample-Bridging-Header.h"; sourceTree = "<group>"; };
 		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrientationDataParsing.h; path = ../Sources/OrientationDataParsing.h; sourceTree = "<group>"; };
 		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrientationDataParsing.m; path = ../Sources/OrientationDataParsing.m; sourceTree = "<group>"; };
+		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CoreBluetooth+Extensions.h"; path = "../Sources/CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
+		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CoreBluetooth+Extensions.m"; path = "../Sources/CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
 		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DDConnectionManager.swift; path = ../Sources/DDConnectionManager.swift; sourceTree = "<group>"; };
 		DFEF11D01FF5D43400725486 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data+Extensions.swift"; path = "../Sources/Data+Extensions.swift"; sourceTree = "<group>"; };
-		DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CoreBluetooth+Extensions.swift"; path = "../Sources/CoreBluetooth+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +111,8 @@
 				031BC8AE1E43DFC90007BEA3 /* DDController.swift */,
 				DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */,
 				DFEF11D01FF5D43400725486 /* Data+Extensions.swift */,
-				DFEF11D21FF5D44700725486 /* CoreBluetooth+Extensions.swift */,
+				DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */,
+				DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */,
 				031BC8B11E43DFC90007BEA3 /* DDControllerTouchpad.swift */,
 				DF47D5951FF6F89200339EF8 /* DCControllerState.h */,
 				DF47D5961FF6F89200339EF8 /* DCControllerState.m */,
@@ -200,7 +202,6 @@
 			files = (
 				031BC89E1E43D8B90007BEA3 /* SampleViewController.swift in Sources */,
 				031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */,
-				DFEF11D31FF5D44700725486 /* CoreBluetooth+Extensions.swift in Sources */,
 				031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */,
 				DF47D59A1FF6FF7A00339EF8 /* DCController.m in Sources */,
 				DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */,
@@ -213,6 +214,7 @@
 				DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */,
 				DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */,
 				031BC8B51E43DFC90007BEA3 /* DDControllerTouchpad.swift in Sources */,
+				DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

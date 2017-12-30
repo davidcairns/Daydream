@@ -70,7 +70,7 @@ public class DDController: NSObject {
 	
     // TODO: Implement this accepting a callback!
     public func updateBatteryLevel() {
-        guard let batteryServiceIndex = services.index(where: { $0.kind == .battery }) else { return }
+        guard let batteryServiceIndex = services.index(where: { $0.kind() == CBServiceKind.battery }) else { return }
         let batteryService = services[batteryServiceIndex]
         guard let batteryLevel = batteryService.characteristics?[0] else { return }
         peripheral.readValue(for: batteryLevel)
@@ -112,17 +112,17 @@ extension DDController: CBPeripheralDelegate {
 		guard let serviceCharacteristics = service.characteristics else { return }
 		
 		for characteristic in serviceCharacteristics {
-			switch service.kind {
+			switch service.kind() {
 			
 			// If the characteristic represents the device state, register for notifications whenever
 			// the value changes so that we can update the state of the touchpad, buttons, and motion.
-			case .state where characteristic.kind == .state:
+			case .state where characteristic.kind() == .state:
 				peripheral.setNotifyValue(true, for: characteristic)
 				
 			// The battery and device info services don't support notifications, so simply read their value once.
 			// To get the latest battery level of the controller, call `updateBatteryLevel`.
 			case .battery,
-			     .deviceInfo where characteristic.kind != .unknown:
+			     .deviceInfo where characteristic.kind() != .unknown:
 				peripheral.readValue(for: characteristic)
 				
 			default: continue
@@ -134,15 +134,15 @@ extension DDController: CBPeripheralDelegate {
 	public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
 		guard let data = characteristic.value else { return }
 		
-		switch characteristic.kind {
+		switch characteristic.kind() {
 		
 		// Update the device state based on the hex string representation of the `characteristic`'s value.
-		case .state where characteristic.service.kind == .state:
+		case .state where characteristic.service.kind() == .state:
             update(from: data)
 		
 		// The device returns the battery level as an integer out of 100.
 		// Convert it to a float and post the battery update notification.
-		case .batteryLevel where characteristic.service.kind == .battery:
+		case .batteryLevel where characteristic.service.kind() == .battery:
 			batteryLevel = Float(data.intValue) / Float(100)
 			
 		// Device info characteristics
