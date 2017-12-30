@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "DCController.h"
 #import "NSData+Extensions.h"
 #import "CoreBluetooth+Extensions.h"
 #import "DCControllerState.h"
+#import "DCConnectionManager.h"
 #import "OrientationDataParsing.h"
 #import "Vect3.h"
 #import "Quaternion.h"

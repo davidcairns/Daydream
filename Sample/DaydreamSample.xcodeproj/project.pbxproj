@@ -12,7 +12,7 @@
 		031BC8A31E43D8B90007BEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A21E43D8B90007BEA3 /* Assets.xcassets */; };
 		031BC8A61E43D8B90007BEA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */; };
 		031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */; };
-		DF3EA7A11FF7633E0032F2ED /* DCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */; };
+		DF3EA7A21FF783160032F2ED /* DCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */; };
 		DFAB8EA61FF7616200938F4F /* DaydreamLib.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.m */; };
 		DFAB8EA71FF7616200938F4F /* DaydreamLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFAB8EA41FF7616200938F4F /* DaydreamLib.h */; };
 		DFAB8EAB1FF7618100938F4F /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
@@ -25,7 +25,6 @@
 		DFAB8EB31FF7618100938F4F /* DCController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5991FF6FF7A00339EF8 /* DCController.m */; };
 		DFAB8EB41FF7618100938F4F /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
 		DFAB8EB61FF7620B00938F4F /* libDaydreamLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFAB8EA21FF7616200938F4F /* libDaydreamLib.a */; };
-		DFAB8EB91FF7624A00938F4F /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +58,8 @@
 		031BC8A51E43D8B90007BEA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		031BC8A71E43D8B90007BEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
-		DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCConnectionManager.h; path = ../Sources/DCConnectionManager.h; sourceTree = "<group>"; };
-		DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCConnectionManager.m; path = ../Sources/DCConnectionManager.m; sourceTree = "<group>"; };
+		DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCConnectionManager.h; sourceTree = "<group>"; };
+		DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCConnectionManager.m; sourceTree = "<group>"; };
 		DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Extensions.h"; sourceTree = "<group>"; };
 		DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Extensions.m"; sourceTree = "<group>"; };
 		DF47D58F1FF6F02700339EF8 /* Quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
@@ -83,7 +82,6 @@
 		DFAB8EA51FF7616200938F4F /* DaydreamLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaydreamLib.m; sourceTree = "<group>"; };
 		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
 		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
-		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDConnectionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,9 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */,
-				DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */,
-				DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */,
-				DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */,
 			);
 			name = Daydream;
 			sourceTree = "<group>";
@@ -155,6 +150,8 @@
 			children = (
 				DFAB8EA41FF7616200938F4F /* DaydreamLib.h */,
 				DFAB8EA51FF7616200938F4F /* DaydreamLib.m */,
+				DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */,
+				DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */,
 				DF47D5981FF6FF7A00339EF8 /* DCController.h */,
 				DF47D5991FF6FF7A00339EF8 /* DCController.m */,
 				DF47D59B1FF70D2E00339EF8 /* DCTouchpad.h */,
@@ -282,10 +279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				031BC89E1E43D8B90007BEA3 /* SampleViewController.swift in Sources */,
-				DF3EA7A11FF7633E0032F2ED /* DCConnectionManager.m in Sources */,
 				031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,
-				DFAB8EB91FF7624A00938F4F /* DDConnectionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +292,7 @@
 				DFAB8EAB1FF7618100938F4F /* DCTouchpad.m in Sources */,
 				DFAB8EB21FF7618100938F4F /* Quaternion.m in Sources */,
 				DFAB8EAD1FF7618100938F4F /* DCControllerButton.m in Sources */,
+				DF3EA7A21FF783160032F2ED /* DCConnectionManager.m in Sources */,
 				DFAB8EB41FF7618100938F4F /* OrientationDataParsing.m in Sources */,
 				DFAB8EB11FF7618100938F4F /* NSData+Extensions.m in Sources */,
 				DFAB8EB01FF7618100938F4F /* Vect3.m in Sources */,
