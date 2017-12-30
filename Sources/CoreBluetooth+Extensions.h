@@ -20,7 +20,7 @@ typedef NS_OPTIONS(NSUInteger, CBServiceKind) {
 };
 
 @interface CBService(DCExtensions)
-- (CBServiceKind)kind;
+@property(nonatomic, readonly)CBServiceKind kind;
 @end
 
 typedef NS_OPTIONS(NSUInteger, CBCharacteristicKind) {
@@ -36,5 +36,5 @@ typedef NS_OPTIONS(NSUInteger, CBCharacteristicKind) {
 };
 
 @interface CBCharacteristic(DCExtensions)
-- (CBCharacteristicKind)kind;
+@property(nonatomic, readonly)CBCharacteristicKind kind;
 @end
