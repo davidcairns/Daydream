@@ -6,3 +6,4 @@
 #import "Vect3.h"
 #import "Quaternion.h"
 #import "DCControllerState.h"
+#import "DCControllerButton.h"

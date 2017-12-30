@@ -149,24 +149,24 @@ class SampleViewController: UIViewController {
                 self.lastPoint = point
             }
             
-            controller.touchpad.button.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+            controller.touchpad.button.pressedHandler = { (button: DCControllerButton, pressed: Bool) in
                 self.showPress(layer: self.touchpadButtonOverlay, pressed: pressed)
             }
             
-            controller.appButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+            controller.appButton.pressedHandler = { (button: DCControllerButton, pressed: Bool) in
                 self.showPress(layer: self.appButtonOverlay, pressed: pressed)
             }
             
-            controller.homeButton.pressedChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+            controller.homeButton.pressedHandler = { (button: DCControllerButton, pressed: Bool) in
                 self.showPress(layer: self.homeButtonOverlay, pressed: pressed)
                 self.homeQuaternion = nil
             }
             
-            controller.volumeUpButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+            controller.volumeUpButton.pressedHandler = { (button: DCControllerButton, pressed: Bool) in
                 self.volumeUpImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Up") : #imageLiteral(resourceName: "Volume Up Pressed")
             }
             
-            controller.volumeDownButton.valueChangedHandler = { (button: DDControllerButton, pressed: Bool) in
+            controller.volumeDownButton.pressedHandler = { (button: DCControllerButton, pressed: Bool) in
                 self.volumeDownImageView.image = !pressed ? #imageLiteral(resourceName: "Volume Down") : #imageLiteral(resourceName: "Volume Down Pressed")
             }
             

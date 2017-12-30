@@ -26,11 +26,11 @@ class DDControllerTouchpad: NSObject {
 	}
 	
 	/// The button underneath the touch pad on the Daydream View controller.
-	private(set) var button: DDControllerButton
+	private(set) var button: DCControllerButton
 	
 	override init() {
 		point = CGPoint.zero
-		button = DDControllerButton()
+		button = DCControllerButton()
 		
 		super.init()
 	}

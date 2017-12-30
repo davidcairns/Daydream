@@ -10,10 +10,6 @@ import UIKit
 import CoreBluetooth
 import CoreMotion
 
-enum DDControllerError: Error {
-	case bluetoothOff
-}
-
 /// Represents a single Daydream Controller.
 public class DDController: NSObject {	
 	/// The services offered by the Daydream View controller, representing:
@@ -56,12 +52,12 @@ public class DDController: NSObject {
 	/// The touch pad of the device.
 	fileprivate(set) var touchpad: DDControllerTouchpad = DDControllerTouchpad()
 	/// The "app" button, which is the top button on the front of the controller.
-	fileprivate(set) var appButton: DDControllerButton = DDControllerButton()
+	fileprivate(set) var appButton: DCControllerButton = DCControllerButton()
 	/// The home button, which is the bottom button on the front of the controller.
-	fileprivate(set) var homeButton: DDControllerButton = DDControllerButton()
+	fileprivate(set) var homeButton: DCControllerButton = DCControllerButton()
     /// Volume buttons are on the side.
-	fileprivate(set) var volumeUpButton: DDControllerButton = DDControllerButton()
-	fileprivate(set) var volumeDownButton: DDControllerButton = DDControllerButton()
+	fileprivate(set) var volumeUpButton: DCControllerButton = DCControllerButton()
+	fileprivate(set) var volumeDownButton: DCControllerButton = DCControllerButton()
     
     typealias OrientationChangeHandler = (Quaternion) -> Void
     var orientationChangedHandler: OrientationChangeHandler? = nil

@@ -59,7 +59,7 @@ class DiscoveryViewController: UIViewController {
 	func discoverControllers() {
 		do {
 			try connectionManager.startDaydreamControllerDiscovery()
-		} catch DDControllerError.bluetoothOff {
+		} catch DDConnectionManagerError.bluetoothOff {
 			print("Bluetooth is off.")
 		} catch _ {}
 	}
