@@ -9,19 +9,17 @@
 import Foundation
 import CoreBluetooth
 
-enum DDConnectionManagerError: Error {
+public enum DDConnectionManagerError: Error {
     case bluetoothOff
 }
 
 public protocol DDConnectionManagerDelegate {
-    func didConnect(to controller: DDController)
-    func didDisconnect(from controller: DDController)
+    func didConnect(to controller: DCController)
+    func didDisconnect(from controller: DCController)
 }
 
-// MARK: - DDConnectionManager
-// An internal class that handles connecting to Daydream View controllers using `CoreBluetooth`.
 public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
-    var controllers: [DDController] = []
+    var controllers: [DCController] = []
     var delegate: DDConnectionManagerDelegate? = nil
     
     var bluetoothManager: CBCentralManager!
@@ -36,7 +34,7 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
     
     /// Starts discovery of Daydream View controllers.
     /// This function throws a `DDConnectionManagerError` if Bluetooth is turned off.
-    func startDaydreamControllerDiscovery() throws {
+    public func startDaydreamControllerDiscovery() throws {
         // Bluetooth is off, return an error
         if bluetoothManager.state == .poweredOff {
             throw DDConnectionManagerError.bluetoothOff
@@ -47,7 +45,7 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
     }
     
     /// Stops discovery of Daydream View controllers.
-    func stopDaydreamControllerDiscovery() {
+    public func stopDaydreamControllerDiscovery() {
         shouldSearchForDevices = false
         
         if bluetoothManager.isScanning {
@@ -65,7 +63,7 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
         }
         
         if shouldSearchForDevices {
-            central.scanForPeripherals(withServices: DDController.serviceUUIDs, options: nil)
+            central.scanForPeripherals(withServices: DCController.serviceUUIDs(), options: nil)
         }
     }
     
@@ -76,8 +74,8 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
                                rssi RSSI: NSNumber) {
         guard let name = peripheral.name, name.contains("Daydream controller") else { return }
         
-        // Create a `DDController` instance, add it to `controllers`, and connect to it.
-        let newController = DDController(peripheral: peripheral)
+        // Create a `DCController` instance, add it to `controllers`, and connect to it.
+        let newController = DCController(peripheral: peripheral)
         controllers.append(newController)
         central.connect(peripheral, options: nil)
     }
@@ -118,7 +116,7 @@ public final class DDConnectionManager: NSObject, CBCentralManagerDelegate {
             return controller.peripheral == peripheral
         }) else { return }
         
-        // Notify the controller that it's connected and post the `DDControllerDidDisconnect` notification.
+        // Notify the controller and our delegate that the controller is no longer connected.
         let controller = controllers[controllerIndex]
         delegate?.didDisconnect(from: controller)
         controllers.remove(at: controllerIndex)

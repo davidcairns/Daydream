@@ -10,3 +10,5 @@
 #import "DCTouchpad.h"
 #import "CoreBluetooth+Extensions.h"
 #import "NSData+Extensions.h"
+#import "DCController.h"
+#import "DCConnectionManager.h"

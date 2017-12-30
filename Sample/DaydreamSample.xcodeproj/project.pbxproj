@@ -11,53 +11,91 @@
 		031BC89E1E43D8B90007BEA3 /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC89D1E43D8B90007BEA3 /* SampleViewController.swift */; };
 		031BC8A31E43D8B90007BEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A21E43D8B90007BEA3 /* Assets.xcassets */; };
 		031BC8A61E43D8B90007BEA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */; };
-		031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8AE1E43DFC90007BEA3 /* DDController.swift */; };
 		031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */; };
-		DF4078191FF71B2A006E2C3C /* NSData+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */; };
-		DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
-		DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
-		DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5961FF6F89200339EF8 /* DCControllerState.m */; };
-		DF47D59A1FF6FF7A00339EF8 /* DCController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5991FF6FF7A00339EF8 /* DCController.m */; };
-		DF47D59D1FF70D2E00339EF8 /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
-		DF47D5A01FF70EBE00339EF8 /* DCControllerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */; };
-		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
-		DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */; };
-		DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
+		DF3EA7A11FF7633E0032F2ED /* DCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */; };
+		DFAB8EA61FF7616200938F4F /* DaydreamLib.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.m */; };
+		DFAB8EA71FF7616200938F4F /* DaydreamLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFAB8EA41FF7616200938F4F /* DaydreamLib.h */; };
+		DFAB8EAB1FF7618100938F4F /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
+		DFAB8EAD1FF7618100938F4F /* DCControllerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */; };
+		DFAB8EAE1FF7618100938F4F /* CoreBluetooth+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */; };
+		DFAB8EAF1FF7618100938F4F /* DCControllerState.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5961FF6F89200339EF8 /* DCControllerState.m */; };
+		DFAB8EB01FF7618100938F4F /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
+		DFAB8EB11FF7618100938F4F /* NSData+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */; };
+		DFAB8EB21FF7618100938F4F /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
+		DFAB8EB31FF7618100938F4F /* DCController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5991FF6FF7A00339EF8 /* DCController.m */; };
+		DFAB8EB41FF7618100938F4F /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
+		DFAB8EB61FF7620B00938F4F /* libDaydreamLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFAB8EA21FF7616200938F4F /* libDaydreamLib.a */; };
+		DFAB8EB91FF7624A00938F4F /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DFAB8EB71FF7621100938F4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 031BC8901E43D8B90007BEA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFAB8EA11FF7616200938F4F;
+			remoteInfo = DaydreamLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFAB8EA01FF7616200938F4F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				DFAB8EA71FF7616200938F4F /* DaydreamLib.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		031BC8981E43D8B90007BEA3 /* DaydreamSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaydreamSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		031BC8981E43D8B90007BEA3 /* DaydreamSample-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DaydreamSample-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		031BC89B1E43D8B90007BEA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		031BC89D1E43D8B90007BEA3 /* SampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
 		031BC8A21E43D8B90007BEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		031BC8A51E43D8B90007BEA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		031BC8A71E43D8B90007BEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		031BC8AE1E43DFC90007BEA3 /* DDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDController.swift; path = ../Sources/DDController.swift; sourceTree = "<group>"; };
 		031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
-		DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSData+Extensions.h"; path = "../Sources/NSData+Extensions.h"; sourceTree = "<group>"; };
-		DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSData+Extensions.m"; path = "../Sources/NSData+Extensions.m"; sourceTree = "<group>"; };
-		DF47D58F1FF6F02700339EF8 /* Quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Quaternion.h; path = ../Sources/Quaternion.h; sourceTree = "<group>"; };
-		DF47D5901FF6F02700339EF8 /* Quaternion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Quaternion.m; path = ../Sources/Quaternion.m; sourceTree = "<group>"; };
-		DF47D5921FF6F10400339EF8 /* Vect3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vect3.h; path = ../Sources/Vect3.h; sourceTree = "<group>"; };
-		DF47D5931FF6F10400339EF8 /* Vect3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Vect3.m; path = ../Sources/Vect3.m; sourceTree = "<group>"; };
-		DF47D5951FF6F89200339EF8 /* DCControllerState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCControllerState.h; path = ../Sources/DCControllerState.h; sourceTree = "<group>"; };
-		DF47D5961FF6F89200339EF8 /* DCControllerState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCControllerState.m; path = ../Sources/DCControllerState.m; sourceTree = "<group>"; };
-		DF47D5981FF6FF7A00339EF8 /* DCController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCController.h; path = ../Sources/DCController.h; sourceTree = "<group>"; };
-		DF47D5991FF6FF7A00339EF8 /* DCController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCController.m; path = ../Sources/DCController.m; sourceTree = "<group>"; };
-		DF47D59B1FF70D2E00339EF8 /* DCTouchpad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCTouchpad.h; path = ../Sources/DCTouchpad.h; sourceTree = "<group>"; };
-		DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCTouchpad.m; path = ../Sources/DCTouchpad.m; sourceTree = "<group>"; };
-		DF47D59E1FF70EBE00339EF8 /* DCControllerButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCControllerButton.h; path = ../Sources/DCControllerButton.h; sourceTree = "<group>"; };
-		DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCControllerButton.m; path = ../Sources/DCControllerButton.m; sourceTree = "<group>"; };
+		DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DCConnectionManager.h; path = ../Sources/DCConnectionManager.h; sourceTree = "<group>"; };
+		DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DCConnectionManager.m; path = ../Sources/DCConnectionManager.m; sourceTree = "<group>"; };
+		DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Extensions.h"; sourceTree = "<group>"; };
+		DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Extensions.m"; sourceTree = "<group>"; };
+		DF47D58F1FF6F02700339EF8 /* Quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
+		DF47D5901FF6F02700339EF8 /* Quaternion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quaternion.m; sourceTree = "<group>"; };
+		DF47D5921FF6F10400339EF8 /* Vect3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vect3.h; sourceTree = "<group>"; };
+		DF47D5931FF6F10400339EF8 /* Vect3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vect3.m; sourceTree = "<group>"; };
+		DF47D5951FF6F89200339EF8 /* DCControllerState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCControllerState.h; sourceTree = "<group>"; };
+		DF47D5961FF6F89200339EF8 /* DCControllerState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCControllerState.m; sourceTree = "<group>"; };
+		DF47D5981FF6FF7A00339EF8 /* DCController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCController.h; sourceTree = "<group>"; };
+		DF47D5991FF6FF7A00339EF8 /* DCController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCController.m; sourceTree = "<group>"; };
+		DF47D59B1FF70D2E00339EF8 /* DCTouchpad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCTouchpad.h; sourceTree = "<group>"; };
+		DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCTouchpad.m; sourceTree = "<group>"; };
+		DF47D59E1FF70EBE00339EF8 /* DCControllerButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCControllerButton.h; sourceTree = "<group>"; };
+		DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCControllerButton.m; sourceTree = "<group>"; };
 		DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DaydreamSample-Bridging-Header.h"; sourceTree = "<group>"; };
-		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrientationDataParsing.h; path = ../Sources/OrientationDataParsing.h; sourceTree = "<group>"; };
-		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrientationDataParsing.m; path = ../Sources/OrientationDataParsing.m; sourceTree = "<group>"; };
-		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CoreBluetooth+Extensions.h"; path = "../Sources/CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
-		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CoreBluetooth+Extensions.m"; path = "../Sources/CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
-		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DDConnectionManager.swift; path = ../Sources/DDConnectionManager.swift; sourceTree = "<group>"; };
+		DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrientationDataParsing.h; sourceTree = "<group>"; };
+		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrientationDataParsing.m; sourceTree = "<group>"; };
+		DFAB8EA21FF7616200938F4F /* libDaydreamLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDaydreamLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFAB8EA41FF7616200938F4F /* DaydreamLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaydreamLib.h; sourceTree = "<group>"; };
+		DFAB8EA51FF7616200938F4F /* DaydreamLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaydreamLib.m; sourceTree = "<group>"; };
+		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
+		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
+		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDConnectionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		031BC8951E43D8B90007BEA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAB8EB61FF7620B00938F4F /* libDaydreamLib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAB8E9F1FF7616200938F4F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -71,20 +109,23 @@
 			isa = PBXGroup;
 			children = (
 				031BC8AD1E43DFB50007BEA3 /* Daydream */,
-				031BC89A1E43D8B90007BEA3 /* Sample */,
+				031BC89A1E43D8B90007BEA3 /* iOS Sample */,
+				DFAB8EA31FF7616200938F4F /* DaydreamLib */,
 				031BC8991E43D8B90007BEA3 /* Products */,
+				DFAB8EB51FF7620B00938F4F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		031BC8991E43D8B90007BEA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				031BC8981E43D8B90007BEA3 /* DaydreamSample.app */,
+				031BC8981E43D8B90007BEA3 /* DaydreamSample-iOS.app */,
+				DFAB8EA21FF7616200938F4F /* libDaydreamLib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		031BC89A1E43D8B90007BEA3 /* Sample */ = {
+		031BC89A1E43D8B90007BEA3 /* iOS Sample */ = {
 			isa = PBXGroup;
 			children = (
 				031BC89B1E43D8B90007BEA3 /* AppDelegate.swift */,
@@ -94,28 +135,38 @@
 				031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */,
 				031BC8A71E43D8B90007BEA3 /* Info.plist */,
 			);
-			name = Sample;
+			name = "iOS Sample";
 			path = DaydreamSample;
 			sourceTree = "<group>";
 		};
 		031BC8AD1E43DFB50007BEA3 /* Daydream */ = {
 			isa = PBXGroup;
 			children = (
+				DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */,
+				DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */,
+				DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */,
+				DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */,
+			);
+			name = Daydream;
+			sourceTree = "<group>";
+		};
+		DFAB8EA31FF7616200938F4F /* DaydreamLib */ = {
+			isa = PBXGroup;
+			children = (
+				DFAB8EA41FF7616200938F4F /* DaydreamLib.h */,
+				DFAB8EA51FF7616200938F4F /* DaydreamLib.m */,
 				DF47D5981FF6FF7A00339EF8 /* DCController.h */,
 				DF47D5991FF6FF7A00339EF8 /* DCController.m */,
 				DF47D59B1FF70D2E00339EF8 /* DCTouchpad.h */,
 				DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */,
 				DF47D59E1FF70EBE00339EF8 /* DCControllerButton.h */,
 				DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */,
-				031BC8AE1E43DFC90007BEA3 /* DDController.swift */,
-				DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */,
 				DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */,
 				DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */,
 				DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */,
 				DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */,
 				DF47D5951FF6F89200339EF8 /* DCControllerState.h */,
 				DF47D5961FF6F89200339EF8 /* DCControllerState.m */,
-				DFA710551FF33FB60053090E /* DaydreamSample-Bridging-Header.h */,
 				DFA7105D1FF37BD70053090E /* OrientationDataParsing.h */,
 				DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */,
 				DF47D5921FF6F10400339EF8 /* Vect3.h */,
@@ -123,15 +174,22 @@
 				DF47D58F1FF6F02700339EF8 /* Quaternion.h */,
 				DF47D5901FF6F02700339EF8 /* Quaternion.m */,
 			);
-			name = Daydream;
+			path = DaydreamLib;
+			sourceTree = "<group>";
+		};
+		DFAB8EB51FF7620B00938F4F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		031BC8971E43D8B90007BEA3 /* DaydreamSample */ = {
+		031BC8971E43D8B90007BEA3 /* DaydreamSample-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 031BC8AA1E43D8B90007BEA3 /* Build configuration list for PBXNativeTarget "DaydreamSample" */;
+			buildConfigurationList = 031BC8AA1E43D8B90007BEA3 /* Build configuration list for PBXNativeTarget "DaydreamSample-iOS" */;
 			buildPhases = (
 				031BC8941E43D8B90007BEA3 /* Sources */,
 				031BC8951E43D8B90007BEA3 /* Frameworks */,
@@ -140,11 +198,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				DFAB8EB81FF7621100938F4F /* PBXTargetDependency */,
 			);
-			name = DaydreamSample;
+			name = "DaydreamSample-iOS";
 			productName = DaydreamSample;
-			productReference = 031BC8981E43D8B90007BEA3 /* DaydreamSample.app */;
+			productReference = 031BC8981E43D8B90007BEA3 /* DaydreamSample-iOS.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DFAB8EA11FF7616200938F4F /* DaydreamLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFAB8EA81FF7616200938F4F /* Build configuration list for PBXNativeTarget "DaydreamLib" */;
+			buildPhases = (
+				DFAB8E9E1FF7616200938F4F /* Sources */,
+				DFAB8E9F1FF7616200938F4F /* Frameworks */,
+				DFAB8EA01FF7616200938F4F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DaydreamLib;
+			productName = DaydreamLib;
+			productReference = DFAB8EA21FF7616200938F4F /* libDaydreamLib.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -162,6 +238,11 @@
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
+					DFAB8EA11FF7616200938F4F = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 9M5CS7L3FF;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 031BC8931E43D8B90007BEA3 /* Build configuration list for PBXProject "DaydreamSample" */;
@@ -177,7 +258,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				031BC8971E43D8B90007BEA3 /* DaydreamSample */,
+				031BC8971E43D8B90007BEA3 /* DaydreamSample-iOS */,
+				DFAB8EA11FF7616200938F4F /* DaydreamLib */,
 			);
 		};
 /* End PBXProject section */
@@ -200,23 +282,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				031BC89E1E43D8B90007BEA3 /* SampleViewController.swift in Sources */,
-				031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */,
+				DF3EA7A11FF7633E0032F2ED /* DCConnectionManager.m in Sources */,
 				031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */,
-				DF47D59A1FF6FF7A00339EF8 /* DCController.m in Sources */,
-				DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */,
-				DF47D5A01FF70EBE00339EF8 /* DCControllerButton.m in Sources */,
-				DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */,
-				DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */,
-				DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */,
-				DF4078191FF71B2A006E2C3C /* NSData+Extensions.m in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,
-				DF47D59D1FF70D2E00339EF8 /* DCTouchpad.m in Sources */,
-				DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */,
-				DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */,
+				DFAB8EB91FF7624A00938F4F /* DDConnectionManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAB8E9E1FF7616200938F4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAB8EAE1FF7618100938F4F /* CoreBluetooth+Extensions.m in Sources */,
+				DFAB8EAB1FF7618100938F4F /* DCTouchpad.m in Sources */,
+				DFAB8EB21FF7618100938F4F /* Quaternion.m in Sources */,
+				DFAB8EAD1FF7618100938F4F /* DCControllerButton.m in Sources */,
+				DFAB8EB41FF7618100938F4F /* OrientationDataParsing.m in Sources */,
+				DFAB8EB11FF7618100938F4F /* NSData+Extensions.m in Sources */,
+				DFAB8EB01FF7618100938F4F /* Vect3.m in Sources */,
+				DFAB8EAF1FF7618100938F4F /* DCControllerState.m in Sources */,
+				DFAB8EB31FF7618100938F4F /* DCController.m in Sources */,
+				DFAB8EA61FF7616200938F4F /* DaydreamLib.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DFAB8EB81FF7621100938F4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFAB8EA11FF7616200938F4F /* DaydreamLib */;
+			targetProxy = DFAB8EB71FF7621100938F4F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */ = {
@@ -270,9 +368,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -313,8 +411,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -352,6 +450,54 @@
 			};
 			name = Release;
 		};
+		DFAB8EA91FF7616200938F4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9M5CS7L3FF;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DFAB8EAA1FF7616200938F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9M5CS7L3FF;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -364,11 +510,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		031BC8AA1E43D8B90007BEA3 /* Build configuration list for PBXNativeTarget "DaydreamSample" */ = {
+		031BC8AA1E43D8B90007BEA3 /* Build configuration list for PBXNativeTarget "DaydreamSample-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				031BC8AB1E43D8B90007BEA3 /* Debug */,
 				031BC8AC1E43D8B90007BEA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFAB8EA81FF7616200938F4F /* Build configuration list for PBXNativeTarget "DaydreamLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAB8EA91FF7616200938F4F /* Debug */,
+				DFAB8EAA1FF7616200938F4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

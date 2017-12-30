@@ -21,6 +21,9 @@ extern NSString * _Nonnull const DCControllerDidDisconnectNotification;
 /// The services offered by the Daydream View controller
 + (NSArray<CBUUID *> * _Nonnull)serviceUUIDs;
 
+/// The internal `CBPeripheral` represented by this controller instance.
+@property(nonatomic, strong)CBPeripheral * _Nonnull peripheral;
+
 // MARK: Input Devices
 /// The touch pad of the device.
 @property(nonatomic, strong)DCTouchpad * _Nonnull touchpad;
@@ -54,7 +57,7 @@ typedef void(^OrientationChangedHandler)(Quaternion);
 @property(nonatomic, copy)NSString * _Nonnull softwareVersion;
 
 
-/// Warning: Call `DDConnectionmanager.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
+/// Warning: Call `DCConnectionmanager.startDaydreamControllerDiscovery()` rather than instantiating this class directly.
 - (_Nonnull instancetype)initWithPeripheral:(CBPeripheral * _Nonnull)peripheral;
 - (void)updateBatteryLevel;
 - (void)didConnect;

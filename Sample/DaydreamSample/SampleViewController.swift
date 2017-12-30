@@ -111,7 +111,7 @@ class SampleViewController: UIViewController {
 		CATransaction.setDisableActions(false)
 	}
     
-    var controller: DDController! = nil {
+    var controller: DCController! = nil {
         didSet {
             guard let controller = controller else { return }
             controller.touchpad.pointChangedHandler = { (touchpad: DCTouchpad, point: CGPoint) in

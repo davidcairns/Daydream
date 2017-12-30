@@ -12,7 +12,7 @@ class DiscoveryViewController: UIViewController {
 	fileprivate let titleLabel: UILabel
 	fileprivate let subtitleLabel: UILabel
 	fileprivate var sampleViewController: SampleViewController? = nil
-    fileprivate let connectionManager: DDConnectionManager = DDConnectionManager()
+    fileprivate let connectionManager: DCConnectionManager = DCConnectionManager()
 	
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		titleLabel = UILabel()
@@ -57,16 +57,12 @@ class DiscoveryViewController: UIViewController {
 	}
 	
 	func discoverControllers() {
-		do {
-			try connectionManager.startDaydreamControllerDiscovery()
-		} catch DDConnectionManagerError.bluetoothOff {
-			print("Bluetooth is off.")
-		} catch _ {}
+        connectionManager.startDaydreamControllerDiscovery()
 	}
 }
 
-extension DiscoveryViewController: DDConnectionManagerDelegate {
-    func didConnect(to controller: DDController) {
+extension DiscoveryViewController: DCConnectionManagerDelegate {
+    func didConnect(to controller: DCController) {
         if nil == sampleViewController {
             sampleViewController = SampleViewController()
             sampleViewController?.controller = controller
@@ -76,7 +72,7 @@ extension DiscoveryViewController: DDConnectionManagerDelegate {
         present(sampleViewController!, animated: true, completion: nil)
     }
     
-    func didDisconnect(from controller: DDController) {
+    func didDisconnect(from controller: DCController) {
         dismiss(animated: true) { [weak self] in
             self!.sampleViewController = nil
             self!.discoverControllers()
