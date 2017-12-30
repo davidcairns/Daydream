@@ -50,7 +50,7 @@ public class DDController: NSObject {
 	
 	// MARK: Input Devices
 	/// The touch pad of the device.
-	fileprivate(set) var touchpad: DDControllerTouchpad = DDControllerTouchpad()
+	fileprivate(set) var touchpad: DCTouchpad = DCTouchpad()
 	/// The "app" button, which is the top button on the front of the controller.
 	fileprivate(set) var appButton: DCControllerButton = DCControllerButton()
 	/// The home button, which is the bottom button on the front of the controller.

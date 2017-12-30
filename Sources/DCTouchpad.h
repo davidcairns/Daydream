@@ -11,14 +11,14 @@
 #import "DCControllerButton.h"
 
 @class DCTouchpad;
-typedef void (^DCTouchpadPointChangedHandler)(DCTouchpad*, CGPoint);
+typedef void (^DCTouchpadPointChangedHandler)(DCTouchpad * _Nonnull, CGPoint);
 
 @interface DCTouchpad : NSObject
 
 @property(nonatomic, assign)CGPoint point;
 
-@property(nonatomic, strong)DCTouchpadPointChangedHandler pointChangedHandler;
+@property(nonatomic, strong)DCTouchpadPointChangedHandler _Nullable pointChangedHandler;
 
-@property(nonatomic, strong)DCControllerButton *button;
+@property(nonatomic, strong)DCControllerButton * _Nonnull button;
 
 @end

@@ -111,11 +111,10 @@ class SampleViewController: UIViewController {
 		CATransaction.setDisableActions(false)
 	}
     
-    
     var controller: DDController! = nil {
         didSet {
             guard let controller = controller else { return }
-            controller.touchpad.pointChangedHandler = { (touchpad: DDControllerTouchpad, point: CGPoint) in
+            controller.touchpad.pointChangedHandler = { (touchpad: DCTouchpad, point: CGPoint) in
                 let wasHidden = self.touchpadPointImageView.isHidden
                 let shouldBeHidden = point.equalTo(CGPoint.zero)
                 
