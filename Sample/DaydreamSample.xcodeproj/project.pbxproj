@@ -20,7 +20,7 @@
 		DF5CA9631FF7840B00A632D8 /* DaydreamLib_macos.h in Headers */ = {isa = PBXBuildFile; fileRef = DF5CA9621FF7840B00A632D8 /* DaydreamLib_macos.h */; };
 		DF5CA9651FF7840B00A632D8 /* DaydreamLib_macos.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5CA9641FF7840B00A632D8 /* DaydreamLib_macos.m */; };
 		DF5CA96B1FF7842400A632D8 /* libDaydreamLib-macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5CA9601FF7840B00A632D8 /* libDaydreamLib-macos.a */; };
-		DF5CA96C1FF7845E00A632D8 /* DaydreamLib.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.m */; };
+		DF5CA96C1FF7845E00A632D8 /* DaydreamLib.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.mm */; };
 		DF5CA96D1FF7845E00A632D8 /* DCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */; };
 		DF5CA96E1FF7845E00A632D8 /* DCController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5991FF6FF7A00339EF8 /* DCController.m */; };
 		DF5CA96F1FF7845E00A632D8 /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
@@ -31,7 +31,7 @@
 		DF5CA9741FF7845E00A632D8 /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
 		DF5CA9751FF7845E00A632D8 /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
 		DF5CA9761FF7845E00A632D8 /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
-		DFAB8EA61FF7616200938F4F /* DaydreamLib.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.m */; };
+		DFAB8EA61FF7616200938F4F /* DaydreamLib.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFAB8EA51FF7616200938F4F /* DaydreamLib.mm */; };
 		DFAB8EA71FF7616200938F4F /* DaydreamLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFAB8EA41FF7616200938F4F /* DaydreamLib.h */; };
 		DFAB8EAB1FF7618100938F4F /* DCTouchpad.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59C1FF70D2E00339EF8 /* DCTouchpad.m */; };
 		DFAB8EAD1FF7618100938F4F /* DCControllerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */; };
@@ -115,7 +115,7 @@
 		DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrientationDataParsing.m; sourceTree = "<group>"; };
 		DFAB8EA21FF7616200938F4F /* libDaydreamLib-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libDaydreamLib-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFAB8EA41FF7616200938F4F /* DaydreamLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaydreamLib.h; sourceTree = "<group>"; };
-		DFAB8EA51FF7616200938F4F /* DaydreamLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaydreamLib.m; sourceTree = "<group>"; };
+		DFAB8EA51FF7616200938F4F /* DaydreamLib.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DaydreamLib.mm; sourceTree = "<group>"; };
 		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
 		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				DFAB8EA41FF7616200938F4F /* DaydreamLib.h */,
-				DFAB8EA51FF7616200938F4F /* DaydreamLib.m */,
+				DFAB8EA51FF7616200938F4F /* DaydreamLib.mm */,
 				DF3EA79F1FF7633E0032F2ED /* DCConnectionManager.h */,
 				DF3EA7A01FF7633E0032F2ED /* DCConnectionManager.m */,
 				DF47D5981FF6FF7A00339EF8 /* DCController.h */,
@@ -445,7 +445,7 @@
 				DF5CA96F1FF7845E00A632D8 /* DCTouchpad.m in Sources */,
 				DF5CA96E1FF7845E00A632D8 /* DCController.m in Sources */,
 				DF5CA9701FF7845E00A632D8 /* DCControllerButton.m in Sources */,
-				DF5CA96C1FF7845E00A632D8 /* DaydreamLib.m in Sources */,
+				DF5CA96C1FF7845E00A632D8 /* DaydreamLib.mm in Sources */,
 				DF5CA9651FF7840B00A632D8 /* DaydreamLib_macos.m in Sources */,
 				DF5CA9741FF7845E00A632D8 /* OrientationDataParsing.m in Sources */,
 				DF5CA96D1FF7845E00A632D8 /* DCConnectionManager.m in Sources */,
@@ -471,7 +471,7 @@
 				DFAB8EB01FF7618100938F4F /* Vect3.m in Sources */,
 				DFAB8EAF1FF7618100938F4F /* DCControllerState.m in Sources */,
 				DFAB8EB31FF7618100938F4F /* DCController.m in Sources */,
-				DFAB8EA61FF7616200938F4F /* DaydreamLib.m in Sources */,
+				DFAB8EA61FF7616200938F4F /* DaydreamLib.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +552,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -594,7 +597,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;

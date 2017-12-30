@@ -8,7 +8,11 @@
 
 #import "Vect3.h"
 
-typedef struct Quaternion {
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    typedef struct Quaternion {
     double x, y, z, w;
 } Quaternion;
 
@@ -30,3 +34,7 @@ typedef struct Matrix3x3 {
 } Matrix3x3;
 
 Matrix3x3 QuaternionGetMatrix (Quaternion q);
+
+#ifdef __cplusplus
+}
+#endif

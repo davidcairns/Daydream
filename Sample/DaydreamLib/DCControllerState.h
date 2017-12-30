@@ -19,6 +19,10 @@
 // https://github.com/gizmosachin/Daydream
 //
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef NS_OPTIONS(int, DCControllerButtons) {
     DCControllerButtonsClick = 1 << 0,
     DCControllerButtonsHome = 1 << 1,
@@ -38,3 +42,7 @@ typedef struct DCControllerState {
 DCControllerState DCControllerStateMake(NSData *data);
 
 Quaternion DCControllerStateGetOrientation(DCControllerState state);
+
+#ifdef __cplusplus
+}
+#endif

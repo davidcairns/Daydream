@@ -6,6 +6,10 @@
 //  Copyright © 2017 Daydream. All rights reserved.
 //
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct Vect3 {
     double x, y, z;
 } Vect3;
@@ -17,3 +21,7 @@ Vect3 Vect3Normalize(Vect3 v);
 
 double Vect3Dot(Vect3 u, Vect3 v);
 Vect3 Vect3Cross(Vect3 u, Vect3 v);
+
+#ifdef __cplusplus
+}
+#endif
