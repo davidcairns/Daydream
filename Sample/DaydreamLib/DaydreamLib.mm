@@ -7,3 +7,9 @@
 //
 
 #import "DaydreamLib.h"
+
+extern "C" {
+    void _StartDiscovery() {
+        
+    }
+}

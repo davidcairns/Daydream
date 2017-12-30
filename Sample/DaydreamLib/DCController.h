@@ -10,6 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "DCTouchpad.h"
 #import "DCControllerButton.h"
+#import "DCControllerState.h"
 #import "Quaternion.h"
 
 extern NSString * _Nonnull const DCControllerDidConnectNotification;
@@ -38,6 +39,8 @@ extern NSString * _Nonnull const DCControllerDidDisconnectNotification;
 typedef void(^OrientationChangedHandler)(Quaternion);
 @property(nonatomic, strong)OrientationChangedHandler _Nullable orientationChangedHandler;
 
+typedef void(^StateChangedHandler)(DCControllerState);
+@property(nonatomic, strong)StateChangedHandler _Nullable stateChangedHandler;
 
 /// MARK: Device Information
 /// The battery level of the controller.

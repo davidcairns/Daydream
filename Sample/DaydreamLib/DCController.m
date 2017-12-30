@@ -8,7 +8,6 @@
 
 #import "DCController.h"
 #import "CoreBluetooth+Extensions.h"
-#import "DCControllerState.h"
 #import "NSData+Extensions.h"
 
 NSString *const DCControllerDidConnectNotification = @"";
@@ -188,6 +187,10 @@ NSString *const DCControllerDidDisconnectNotification = @"";
     
     if(self.orientationChangedHandler) {
         self.orientationChangedHandler(DCControllerStateGetOrientation(state));
+    }
+    
+    if(self.stateChangedHandler) {
+        self.stateChangedHandler(state);
     }
 }
 
