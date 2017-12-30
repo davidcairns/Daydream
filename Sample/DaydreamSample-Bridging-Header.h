@@ -9,3 +9,4 @@
 #import "DCControllerButton.h"
 #import "DCTouchpad.h"
 #import "CoreBluetooth+Extensions.h"
+#import "NSData+Extensions.h"

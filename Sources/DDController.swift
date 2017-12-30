@@ -132,7 +132,7 @@ extension DDController: CBPeripheralDelegate {
 	
 	/// Called when a characteristic value is read and returned by the device.
 	public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-		guard let data = characteristic.value else { return }
+        guard let data = characteristic.value as NSData? else { return }
 		
 		switch characteristic.kind() {
 		
@@ -140,10 +140,10 @@ extension DDController: CBPeripheralDelegate {
 		case .state where characteristic.service.kind() == .state:
             update(from: data)
 		
-		// The device returns the battery level as an integer out of 100.
-		// Convert it to a float and post the battery update notification.
-		case .batteryLevel where characteristic.service.kind() == .battery:
-			batteryLevel = Float(data.intValue) / Float(100)
+//        // The device returns the battery level as an integer out of 100.
+//        // Convert it to a float and post the battery update notification.
+//        case .batteryLevel where characteristic.service.kind() == .battery:
+//            batteryLevel = Float(data.intValue) / Float(100)
 			
 		// Device info characteristics
 		case .manufacturer:
@@ -171,8 +171,8 @@ extension DDController: CBPeripheralDelegate {
 	}
 	
 	/// Updates the state of the controller's touchpad and buttons based on the hex string from the device.
-    private func update(from data: Data) {
-        let state = DCControllerStateMake(data)
+    private func update(from data: NSData) {
+        let state = DCControllerStateMake(data as Data!)
 		
 		// Update touchpad and buttons
         touchpad.point = state.touchPoint

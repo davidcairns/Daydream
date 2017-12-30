@@ -13,6 +13,7 @@
 		031BC8A61E43D8B90007BEA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 031BC8A41E43D8B90007BEA3 /* LaunchScreen.storyboard */; };
 		031BC8B21E43DFC90007BEA3 /* DDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8AE1E43DFC90007BEA3 /* DDController.swift */; };
 		031BC8B91E44129C0007BEA3 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */; };
+		DF4078191FF71B2A006E2C3C /* NSData+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */; };
 		DF47D5911FF6F02700339EF8 /* Quaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5901FF6F02700339EF8 /* Quaternion.m */; };
 		DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5931FF6F10400339EF8 /* Vect3.m */; };
 		DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47D5961FF6F89200339EF8 /* DCControllerState.m */; };
@@ -22,7 +23,6 @@
 		DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA7105E1FF37BD70053090E /* OrientationDataParsing.m */; };
 		DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */; };
 		DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */; };
-		DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF11D01FF5D43400725486 /* Data+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +34,8 @@
 		031BC8A71E43D8B90007BEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031BC8AE1E43DFC90007BEA3 /* DDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDController.swift; path = ../Sources/DDController.swift; sourceTree = "<group>"; };
 		031BC8B81E44129C0007BEA3 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
+		DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSData+Extensions.h"; path = "../Sources/NSData+Extensions.h"; sourceTree = "<group>"; };
+		DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSData+Extensions.m"; path = "../Sources/NSData+Extensions.m"; sourceTree = "<group>"; };
 		DF47D58F1FF6F02700339EF8 /* Quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Quaternion.h; path = ../Sources/Quaternion.h; sourceTree = "<group>"; };
 		DF47D5901FF6F02700339EF8 /* Quaternion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Quaternion.m; path = ../Sources/Quaternion.m; sourceTree = "<group>"; };
 		DF47D5921FF6F10400339EF8 /* Vect3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vect3.h; path = ../Sources/Vect3.h; sourceTree = "<group>"; };
@@ -52,7 +54,6 @@
 		DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CoreBluetooth+Extensions.h"; path = "../Sources/CoreBluetooth+Extensions.h"; sourceTree = "<group>"; };
 		DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CoreBluetooth+Extensions.m"; path = "../Sources/CoreBluetooth+Extensions.m"; sourceTree = "<group>"; };
 		DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DDConnectionManager.swift; path = ../Sources/DDConnectionManager.swift; sourceTree = "<group>"; };
-		DFEF11D01FF5D43400725486 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data+Extensions.swift"; path = "../Sources/Data+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +109,8 @@
 				DF47D59F1FF70EBE00339EF8 /* DCControllerButton.m */,
 				031BC8AE1E43DFC90007BEA3 /* DDController.swift */,
 				DFEF11CE1FF5D41100725486 /* DDConnectionManager.swift */,
-				DFEF11D01FF5D43400725486 /* Data+Extensions.swift */,
+				DF4078171FF71B2A006E2C3C /* NSData+Extensions.h */,
+				DF4078181FF71B2A006E2C3C /* NSData+Extensions.m */,
 				DFD55E5D1FF715A600959076 /* CoreBluetooth+Extensions.h */,
 				DFD55E5E1FF715A600959076 /* CoreBluetooth+Extensions.m */,
 				DF47D5951FF6F89200339EF8 /* DCControllerState.h */,
@@ -206,9 +208,9 @@
 				DF47D5971FF6F89200339EF8 /* DCControllerState.m in Sources */,
 				DFEF11CF1FF5D41100725486 /* DDConnectionManager.swift in Sources */,
 				DFA7105F1FF37BD70053090E /* OrientationDataParsing.m in Sources */,
+				DF4078191FF71B2A006E2C3C /* NSData+Extensions.m in Sources */,
 				031BC89C1E43D8B90007BEA3 /* AppDelegate.swift in Sources */,
 				DF47D59D1FF70D2E00339EF8 /* DCTouchpad.m in Sources */,
-				DFEF11D11FF5D43400725486 /* Data+Extensions.swift in Sources */,
 				DF47D5941FF6F10400339EF8 /* Vect3.m in Sources */,
 				DFD55E5F1FF715A600959076 /* CoreBluetooth+Extensions.m in Sources */,
 			);
